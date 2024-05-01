@@ -7,23 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model CenterLocations {
-  id   String @id() @default(uuid())
-  city String
-  url  String
-}
-
 model Article {
-  id      String  @id() @default(uuid())
+  id      String  @id @default(uuid())
   title   String
-  img     String
+  photo   String
   content String
-  active  Boolean
+  active  Boolean @default(true)
 }
 
 model Question {
-  id       String  @id() @default(uuid())
+  id       String  @id @default(uuid())
   question String
-  answer   String
-  active   Boolean
+  answer   String  @default("")
+  active   Boolean @default(false)
+}
+
+model City {
+  id                String              @id @default(uuid())
+  name              String              @unique
+  donationLocations DonationLocations[]
+}
+
+model DonationLocations {
+  id      String @id @default(uuid())
+  address String
+  cityId  String
+  url     String
+  city    City   @relation(fields: [cityId], references: [id])
 }
