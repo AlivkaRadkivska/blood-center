@@ -11,13 +11,13 @@ export async function POST(request: NextRequest): Promise<Response> {
       { status: 400 }
     );
 
-  const res = await db.donationLocations.create({
+  const res = await db.donationLocation.create({
     data: { address, url, cityId },
   });
   return Response.json(res);
 }
 
 export async function GET(): Promise<Response> {
-  const res = await db.donationLocations.findMany();
+  const res = await db.donationLocation.findMany();
   return Response.json(res);
 }

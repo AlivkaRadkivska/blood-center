@@ -23,15 +23,24 @@ model Question {
 }
 
 model City {
-  id                String              @id @default(uuid())
-  name              String              @unique
-  donationLocations DonationLocations[]
+  id                String             @id @default(uuid())
+  name              String             @unique
+  donationLocations DonationLocation[]
+  bloodNeeds        BloodNeeds[]
 }
 
-model DonationLocations {
+model DonationLocation {
   id      String @id @default(uuid())
   address String
   cityId  String
   url     String
   city    City   @relation(fields: [cityId], references: [id])
+}
+
+model BloodNeeds {
+  id         String   @id @default(uuid())
+  lastUpdate DateTime @default(now())
+  bloodTypes String[]
+  cityId     String   @unique
+  city       City     @relation(fields: [cityId], references: [id])
 }

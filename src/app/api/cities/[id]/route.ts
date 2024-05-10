@@ -1,5 +1,4 @@
 import { db } from '@db/index';
-import { error } from 'console';
 import { NextRequest } from 'next/server';
 
 export async function GET(
@@ -21,6 +20,14 @@ export async function PATCH(
 ): Promise<Response> {
   const id: string = params.id;
   const data = await request.json();
+  const { name } = data;
+
+  const city = await db.city.findUnique({ where: { name } });
+  if (city)
+    return Response.json(
+      { error: 'Місто з такою назвою вже існує.' },
+      { status: 400 }
+    );
 
   const res = await db.city.update({
     data,
@@ -38,10 +45,13 @@ export async function DELETE(
 ): Promise<Response> {
   const id: string = params.id;
 
-  const donationLocations = await db.donationLocations.findMany({
+  const donationLocation = await db.donationLocation.findFirst({
     where: { cityId: id },
   });
-  if (donationLocations.length > 0)
+  const bloodNeeds = await db.bloodNeeds.findFirst({
+    where: { cityId: id },
+  });
+  if (donationLocation || bloodNeeds)
     return Response.json(
       { error: 'Це місто не може бути видалене.' },
       { status: 400 }

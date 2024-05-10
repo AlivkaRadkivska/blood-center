@@ -5,7 +5,8 @@ const db = new PrismaClient();
 async function main() {
   await db.article.deleteMany();
   await db.question.deleteMany();
-  await db.donationLocations.deleteMany();
+  await db.donationLocation.deleteMany();
+  await db.bloodNeeds.deleteMany();
   await db.city.deleteMany();
 
   await db.article.createMany({
@@ -46,7 +47,7 @@ async function main() {
     },
   });
 
-  await db.donationLocations.createMany({
+  await db.donationLocation.createMany({
     data: [
       {
         address: 'Вул. Один, 2',
@@ -56,6 +57,16 @@ async function main() {
       {
         address: 'Вул. Два, 1',
         url: 'https://example.com/donate-location2',
+        cityId: city.id,
+      },
+    ],
+  });
+
+  await db.bloodNeeds.createMany({
+    data: [
+      {
+        lastUpdate: new Date(Date.now()),
+        bloodTypes: ['1-', '2+', '4+'],
         cityId: city.id,
       },
     ],

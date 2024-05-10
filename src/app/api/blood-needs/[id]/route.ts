@@ -7,11 +7,11 @@ export async function GET(
 ): Promise<Response> {
   const id: string = params.id;
 
-  const res = await db.donationLocation.findUnique({ where: { id } });
+  const res = await db.bloodNeeds.findUnique({ where: { id } });
 
   if (!res)
     return Response.json(
-      { error: 'Пункт здачі крові не знайдено.' },
+      { error: 'Потреби крові за цим id не знайдено.' },
       { status: 404 }
     );
   return Response.json(res);
@@ -23,15 +23,16 @@ export async function PATCH(
 ): Promise<Response> {
   const id: string = params.id;
   const data = await request.json();
+  const { bloodTypes } = data;
 
-  const res = await db.donationLocation.update({
-    data,
+  const res = await db.bloodNeeds.update({
+    data: { bloodTypes, lastUpdate: new Date(Date.now()) },
     where: { id },
   });
 
   if (!res)
     return Response.json(
-      { error: 'Пункт здачі крові не знайдено.' },
+      { error: 'Потреби крові за цим id не знайдено.' },
       { status: 404 }
     );
   return Response.json(res);
@@ -43,6 +44,6 @@ export async function DELETE(
 ): Promise<Response> {
   const id: string = params.id;
 
-  const res = await db.donationLocation.delete({ where: { id } });
+  const res = await db.bloodNeeds.delete({ where: { id } });
   return Response.json(res);
 }
