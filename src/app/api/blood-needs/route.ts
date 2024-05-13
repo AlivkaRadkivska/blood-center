@@ -14,7 +14,7 @@ export async function POST(request: NextRequest): Promise<Response> {
   const bloodNeed = await db.bloodNeeds.findUnique({ where: { cityId } });
   if (bloodNeed)
     return Response.json(
-      { error: 'Дані про потреби крові в цьому місті вже є в базі.' },
+      { error: 'Дані про потреби у крові в цьому місті вже є в базі.' },
       { status: 400 }
     );
 
@@ -24,7 +24,14 @@ export async function POST(request: NextRequest): Promise<Response> {
   return Response.json(res);
 }
 
-export async function GET(): Promise<Response> {
+export async function GET(request: NextRequest): Promise<Response> {
+  const url = request.nextUrl.searchParams;
+  const cityId = url.get('cityId');
+
+  if (cityId) {
+    console.log(cityId);
+  }
+
   const res = await db.bloodNeeds.findMany();
   return Response.json(res);
 }

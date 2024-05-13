@@ -7,11 +7,11 @@ export async function GET(
 ): Promise<Response> {
   const id: string = params.id;
 
-  const res = await db.bloodNeeds.findUnique({ where: { id } });
+  const res = await db.bloodNeeds.findUnique({ where: { cityId: id } });
 
   if (!res)
     return Response.json(
-      { error: 'Потреби крові за цим id не знайдено.' },
+      { error: 'Потреби у крові за цим id не знайдено.' },
       { status: 404 }
     );
   return Response.json(res);
@@ -32,7 +32,7 @@ export async function PATCH(
 
   if (!res)
     return Response.json(
-      { error: 'Потреби крові за цим id не знайдено.' },
+      { error: 'Потреби у крові за цим id не знайдено.' },
       { status: 404 }
     );
   return Response.json(res);

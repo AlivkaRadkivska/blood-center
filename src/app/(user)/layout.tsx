@@ -1,6 +1,5 @@
-import { Lora } from 'next/font/google';
-
-const font = Lora({ subsets: ['latin', 'cyrillic'] });
+import Footer from '@/components/footer';
+import Header from '@/components/header';
 
 export default function RootLayout({
   children,
@@ -8,12 +7,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <body className={font.className}>
-      <header className="w-full flex items-start justify-center">Header</header>
+    <>
+      <Header />
 
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <main className="flex flex-col justify-top items-center p-2">
         {children}
       </main>
-    </body>
+
+      <Footer />
+    </>
   );
 }

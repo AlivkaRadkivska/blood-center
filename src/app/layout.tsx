@@ -1,5 +1,11 @@
 import type { Metadata } from 'next';
 import '@public/css/globals.css';
+import { Tenor_Sans } from 'next/font/google';
+
+const font = Tenor_Sans({
+  subsets: ['latin', 'cyrillic'],
+  weight: '400',
+});
 
 export const metadata: Metadata = {
   title: 'Erytro Center',
@@ -11,5 +17,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <html lang="en">{children}</html>;
+  return (
+    <html lang="en">
+      <body className={`${font.className} w-full`}>{children}</body>
+    </html>
+  );
 }
