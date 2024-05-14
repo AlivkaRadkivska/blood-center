@@ -5,6 +5,7 @@ import { Cormorant_Infant } from 'next/font/google';
 import { BloodNeedsContainer } from '@/components/blood-needs-container';
 import { CityT } from '@/types/city';
 import Link from 'next/link';
+import Title from '@/components/ui/title';
 
 const accentFont = Cormorant_Infant({
   subsets: ['latin', 'cyrillic'],
@@ -31,9 +32,9 @@ export default async function HomePage() {
           />
           <div className="h-auto w-full flex flex-col justify-between py-1">
             <div>
-              <p className={`${accentFont.className} text-6xl text-red`}>
+              <h1 className={`${accentFont.className} text-6xl text-red`}>
                 Еритро Центр
-              </p>
+              </h1>
               <p className="text-lg my-4">
                 Ваша участь у зборі крові дарує надію на продовження життя, адже
                 завдяки Вам, серця людей продовжують битися. ♥️
@@ -54,15 +55,16 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
       <section className="flex flex-col w-full items-center justify-center py-2">
-        <p
-          className={`${accentFont.className} text-3xl font-semibold text-red`}
-        >
-          Актуальні потреби у крові
-        </p>
+        <Title text="Актуальні потреби у крові" />
         <BloodNeedsContainer cities={cities} />
       </section>
-      <section>Who can i donor my blood and who can donor for me?</section>
+
+      <section>
+        <Title text="Як працює донація крові" />
+        <p className="text-green">Desc</p>
+      </section>
     </>
   );
 }

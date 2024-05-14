@@ -29,7 +29,8 @@ export async function GET(request: NextRequest): Promise<Response> {
   const cityId = url.get('cityId');
 
   if (cityId) {
-    console.log(cityId);
+    const res = await db.bloodNeeds.findMany({ where: { cityId } });
+    return Response.json(res);
   }
 
   const res = await db.bloodNeeds.findMany();

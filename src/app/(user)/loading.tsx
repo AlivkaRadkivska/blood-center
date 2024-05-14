@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
-    <div className="flex w-full h-screen items-center justify-start">
-      <p>Сторінка завантажується</p>
+    <div className="flex flex-auto w-full items-center justify-center">
+      <p>Зачекайте хвилинку, сторінка завантажується...</p>
     </div>
   );
 }

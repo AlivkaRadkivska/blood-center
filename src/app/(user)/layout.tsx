@@ -10,7 +10,7 @@ export default function RootLayout({
     <>
       <Header />
 
-      <main className="flex flex-col justify-top items-center p-2">
+      <main className="flex flex-col flex-auto justify-center items-center p-2">
         {children}
       </main>
 
