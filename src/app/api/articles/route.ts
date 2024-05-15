@@ -17,7 +17,19 @@ export async function POST(request: NextRequest): Promise<Response> {
   return Response.json(res);
 }
 
-export async function GET(): Promise<Response> {
-  const res = await db.article.findMany();
+export async function GET(request: NextRequest): Promise<Response> {
+  const url = request.nextUrl.searchParams;
+  const active = (url.get('active') as unknown) == 'true' || undefined;
+  const search = url.get('search') as unknown as string;
+  const page = url.get('page') as unknown as number;
+
+  const res = await db.article.findMany({
+    take: 2,
+    skip: page ? (page - 1) * 2 : 0,
+    where: {
+      active,
+      title: { contains: search ? search : '', mode: 'insensitive' },
+    },
+  });
   return Response.json(res);
 }

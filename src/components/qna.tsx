@@ -4,16 +4,26 @@ import { Accordion, AccordionItem } from '@szhsin/react-accordion';
 import { useEffect, useState } from 'react';
 
 export default function QnA() {
+  const [loading, setLoading] = useState<boolean>(true);
   const [questions, setQuestions] = useState<QuestionT[]>([]);
 
   useEffect(() => {
+    setLoading(true);
     fetch('/api/questions?active=true')
       .then((res) => res.json())
-      .then((res) => setQuestions(res));
+      .then((res) => {
+        setQuestions(res);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
     <Accordion className="w-full flex flex-col items-center justify-center gap-3">
+      {loading && <div>Loading...</div>}
+
       {questions.map((item) => (
         <AccordionItem
           key={item.id.toString()}

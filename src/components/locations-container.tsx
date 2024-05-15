@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { CityT } from '@/types/city';
 import CitySelect from './ui/city-select';
-import { AccentButton } from './ui/button';
 import Link from 'next/link';
 import { DonationLocationT } from '@/types/donation-location';
 
@@ -33,6 +32,7 @@ export function LocationsContainer({ cities }: { cities: CityT[] }) {
               key={item.id.toString()}
               href={item.url.toString()}
               target="_blank"
+              className="underline underline-offset-2"
             >
               {item.address}
             </Link>
