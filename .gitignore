@@ -39,3 +39,5 @@ docker-compose.yml
 
 # uploads
 public/uploads/*
+# Sentry Config File
+.env.sentry-build-plugin
