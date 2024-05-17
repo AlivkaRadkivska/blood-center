@@ -28,7 +28,7 @@ export function NewsContainer({ search, currentPage }: NewsContainerProps) {
 
   return (
     <div className="flex flex-col items-center justify-center p-3">
-      {loading && <div>Loading...</div>}
+      {loading && <div>Завантаження статей...</div>}
       {articles &&
         articles?.length > 0 &&
         articles.map((item) => (

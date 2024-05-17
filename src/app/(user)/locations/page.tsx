@@ -9,7 +9,9 @@ export default async function LocationsPage() {
 
   return (
     <>
-      <Title text="Усі пункти прийому" />
+      <Title>
+        <h1>Усі пункти прийому</h1>
+      </Title>
       <LocationsContainer cities={cities} />
     </>
   );

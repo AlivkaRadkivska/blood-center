@@ -9,6 +9,7 @@ export default function Header() {
       <Link href="/">
         <Image src={logo} alt="logo" width={100} />
       </Link>
+      <HeaderLink href="/" label="Головна" />
       <HeaderLink href="/for-donor" label="Для донорів" />
       <HeaderLink href="/locations" label="Пункти прийому" />
       <HeaderLink href="/news" label="Новини" />

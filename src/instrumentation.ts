@@ -6,7 +6,7 @@ export async function register() {
       dsn: 'https://09cd2d792287f62931a6bca963ba0f31@o4507261939548160.ingest.de.sentry.io/4507261950296144',
       tracesSampleRate: 1,
       debug: false,
-      spotlight: process.env.NODE_ENV === 'development',
+      spotlight: process.env.NODE_ENV === 'production',
     });
   }
 
@@ -15,6 +15,7 @@ export async function register() {
       dsn: 'https://09cd2d792287f62931a6bca963ba0f31@o4507261939548160.ingest.de.sentry.io/4507261950296144',
       tracesSampleRate: 1,
       debug: false,
+      spotlight: process.env.NODE_ENV === 'production',
     });
   }
 }

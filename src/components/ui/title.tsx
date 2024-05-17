@@ -5,10 +5,10 @@ const accentFont = Cormorant_Infant({
   weight: '700',
 });
 
-export default function Title({ text }: { text: string }) {
+export default function Title({ children }: { children: React.ReactNode }) {
   return (
-    <p className={`${accentFont.className} text-3xl font-semibold text-red`}>
-      {text}
-    </p>
+    <div className={`${accentFont.className} text-3xl font-semibold text-red`}>
+      {children}
+    </div>
   );
 }

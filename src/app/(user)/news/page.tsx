@@ -1,8 +1,7 @@
 import { NewsContainer } from '@/components/news-container';
-import Search from '@/components/search';
+import Search from '@/components/ui/search';
 import Title from '@/components/ui/title';
-import Pagination from '@/components/pagination';
-import { db } from '@db/index';
+import Pagination from '@/components/ui/pagination';
 import { getArticlesNumber } from '@/utils/db-helper';
 
 interface NewsPageProps {
@@ -19,10 +18,12 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
 
   return (
     <>
-      <Title text="Новини в світі донорства крові" />
+      <Title>
+        <h1>Новини в світі донорства крові</h1>
+      </Title>
 
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Знайти за назвою" />
+        <Search placeholder="Знайти за заголовком" />
       </div>
 
       <NewsContainer search={search} currentPage={currentPage} />

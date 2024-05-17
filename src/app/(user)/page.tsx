@@ -57,12 +57,12 @@ export default async function HomePage() {
       </section>
 
       <section className="flex flex-col w-full items-center justify-center py-2">
-        <Title text="Актуальні потреби у крові" />
+        <Title>Актуальні потреби у крові</Title>
         <BloodNeedsContainer cities={cities} />
       </section>
 
       <section>
-        <Title text="Як працює донація крові" />
+        <Title>Як працює донація крові</Title>
         <p className="text-green">Desc</p>
       </section>
     </>
