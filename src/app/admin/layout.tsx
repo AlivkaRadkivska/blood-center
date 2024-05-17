@@ -1,14 +1,29 @@
-import { Lora } from 'next/font/google';
+import { Signout } from '@/components/admin/sign-out';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
-const font = Lora({ subsets: ['latin', 'cyrillic'] });
+async function getUserRole(userId: string): Promise<string> {
+  const { data } = await clerkClient.users.getOrganizationMembershipList({
+    userId,
+  });
 
-export default function RootLayout({
+  if (data.length < 1) return '';
+  return data[0].role;
+}
+
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await currentUser();
+  if (!user) redirect('/');
+
+  const role = await getUserRole(user.id);
+  if (user && role != 'org:admin') return <Signout />;
+
   return (
-    <body className={font.className}>
+    <>
       <header className="w-full flex items-start justify-center">
         Admin Header
       </header>
@@ -16,6 +31,6 @@ export default function RootLayout({
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         {children}
       </main>
-    </body>
+    </>
   );
 }
