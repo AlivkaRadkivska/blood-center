@@ -24,8 +24,8 @@ export async function GET(request: NextRequest): Promise<Response> {
   const page = url.get('page') as unknown as number;
 
   const res = await db.article.findMany({
-    take: 2,
-    skip: page ? (page - 1) * 2 : 0,
+    take: 5,
+    skip: page ? (page - 1) * 5 : 0,
     where: {
       active,
       title: { contains: search ? search : '', mode: 'insensitive' },

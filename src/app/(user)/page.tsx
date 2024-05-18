@@ -6,6 +6,7 @@ import { BloodNeedsContainer } from '@/components/blood-needs-container';
 import { CityT } from '@/types/city';
 import Link from 'next/link';
 import Title from '@/components/ui/title';
+import QnA from '@/components/questions-n-answers/qna';
 
 const accentFont = Cormorant_Infant({
   subsets: ['latin', 'cyrillic'],
@@ -27,12 +28,12 @@ export default async function HomePage() {
             width={0}
             height={0}
             sizes="50vw"
-            style={{ width: '50%', height: 'auto' }}
+            style={{ width: '40%', height: 'auto' }}
             className="rounded-xl"
           />
           <div className="h-auto w-full flex flex-col justify-between py-1">
             <div>
-              <h1 className={`${accentFont.className} text-6xl text-red`}>
+              <h1 className={`${accentFont.className} text-6xl text-purple`}>
                 Еритро Центр
               </h1>
               <p className="text-lg my-4">
@@ -59,6 +60,11 @@ export default async function HomePage() {
       <section className="flex flex-col w-full items-center justify-center py-2">
         <Title>Актуальні потреби у крові</Title>
         <BloodNeedsContainer cities={cities} />
+      </section>
+
+      <section className="flex flex-col w-full items-center justify-center py-2">
+        <Title>Популярні питання</Title>
+        <QnA />
       </section>
 
       <section>

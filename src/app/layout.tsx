@@ -10,8 +10,8 @@ const font = Tenor_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Erytro Center',
-  description: 'Web site for blood center',
+  title: 'Еритро Центр',
+  description: 'Інформаційни вебсайт про кров',
 };
 
 export default function RootLayout({

@@ -1,13 +1,17 @@
 'use client';
 import { ArticleT } from '@/types/article';
 import { useEffect, useState } from 'react';
+import { MiniArticle } from './mini-article';
 
-interface NewsContainerProps {
+interface ArticlesContainerProps {
   search: string;
   currentPage: number;
 }
 
-export function NewsContainer({ search, currentPage }: NewsContainerProps) {
+export function ArticlesContainer({
+  search,
+  currentPage,
+}: ArticlesContainerProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [articles, setArticles] = useState<ArticleT[]>();
 
@@ -27,18 +31,16 @@ export function NewsContainer({ search, currentPage }: NewsContainerProps) {
   }, [search, currentPage]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-3">
+    <div className="flex flex-col items-center justify-center p-3 w-full max-w-[800px]">
       {loading && <div>Завантаження статей...</div>}
       {articles &&
         articles?.length > 0 &&
         articles.map((item) => (
-          <div key={item.id.toString()}>
-            <p>{item.title}</p>
-          </div>
+          <MiniArticle key={item.id.toString()} article={item} />
         ))}
 
       {!loading && (!articles || articles.length === 0) && (
-        <p className="my-2 max-w-96 text-center">Статей не знайдено</p>
+        <p className="my-2 max-w-96 text-center">Статей не знайдено.</p>
       )}
     </div>
   );

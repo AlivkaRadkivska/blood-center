@@ -20,12 +20,21 @@ export async function POST(request: NextRequest): Promise<Response> {
 export async function GET(request: NextRequest): Promise<Response> {
   const url = request.nextUrl.searchParams;
   const cityId = url.get('cityId');
+  const search = url.get('search');
 
   if (cityId) {
-    const res = await db.donationLocation.findMany({ where: { cityId } });
+    const res = await db.donationLocation.findMany({
+      where: {
+        cityId,
+      },
+    });
     return Response.json(res);
   }
 
-  const res = await db.donationLocation.findMany();
+  const res = await db.donationLocation.findMany({
+    where: {
+      address: { contains: search ? search : '', mode: 'insensitive' },
+    },
+  });
   return Response.json(res);
 }

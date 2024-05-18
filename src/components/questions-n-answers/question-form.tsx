@@ -21,7 +21,10 @@ export default function QuestionForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-4">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 mt-4 w-full max-w-[600px]"
+    >
       <p className="my-2 text-xl text-purple text-semibold">
         Залишилися питання?
       </p>

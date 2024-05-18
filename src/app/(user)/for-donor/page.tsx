@@ -1,4 +1,3 @@
-import QnA from '@/components/questions-n-answers/qna';
 import QuestionForm from '@/components/questions-n-answers/question-form';
 import Title from '@/components/ui/title';
 
@@ -12,9 +11,7 @@ export default async function ForDonorPage() {
         <p className="text-green">Text</p>
       </section>
 
-      <section className="flex flex-col w-full items-center justify-center py-2">
-        <Title>Популярні питання</Title>
-        <QnA />
+      <section className="flex flex-col w-full items-center justify-start py-2">
         <QuestionForm />
       </section>
     </>

@@ -22,7 +22,7 @@ export default function QnA() {
 
   return (
     <Accordion className="w-full flex flex-col items-center justify-center gap-3">
-      {loading && <div>Loading...</div>}
+      {loading && <div>Питання завантажуються...</div>}
 
       {questions.map((item) => (
         <AccordionItem

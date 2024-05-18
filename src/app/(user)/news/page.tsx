@@ -1,4 +1,4 @@
-import { NewsContainer } from '@/components/news-container';
+import { ArticlesContainer } from '@components/articles/articles-container';
 import Search from '@/components/ui/search';
 import Title from '@/components/ui/title';
 import Pagination from '@/components/ui/pagination';
@@ -14,10 +14,10 @@ interface NewsPageProps {
 export default async function NewsPage({ searchParams }: NewsPageProps) {
   const search = searchParams?.search || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await getArticlesNumber(true, search);
+  const totalPages = await getArticlesNumber(true, search, 5);
 
   return (
-    <>
+    <div className="w-full flex flex-col items-center justify-center mt-20">
       <Title>
         <h1>Новини в світі донорства крові</h1>
       </Title>
@@ -26,11 +26,11 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
         <Search placeholder="Знайти за заголовком" />
       </div>
 
-      <NewsContainer search={search} currentPage={currentPage} />
+      <ArticlesContainer search={search} currentPage={currentPage} />
 
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
-    </>
+    </div>
   );
 }

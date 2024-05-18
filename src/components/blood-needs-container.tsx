@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export function BloodNeedsContainer({ cities }: { cities: CityT[] }) {
   const [cityId, setCityId] = useState(cities[0].id);
-  const [bloodTypes, setBloodTypes] = useState([]);
+  const [bloodTypes, setBloodTypes] = useState(['_']);
   const [lastUpdate, setLastUpdate] = useState(new Date());
 
   useEffect(() => {

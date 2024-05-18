@@ -10,6 +10,7 @@ export default function CitySelect({ cities, onChange }: CitySelectProps) {
   function handleChange(e: { target: { value: SetStateAction<string> } }) {
     onChange(e.target.value.toString());
   }
+
   return (
     <select
       name="city"
