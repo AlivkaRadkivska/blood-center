@@ -22,7 +22,9 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={ukUA}>
       <html lang="en">
-        <body className={`${font.className} w-full min-h-screen flex flex-col`}>
+        <body
+          className={`${font.className} w-full min-h-screen flex flex-col relative`}
+        >
           {children}
         </body>
       </html>

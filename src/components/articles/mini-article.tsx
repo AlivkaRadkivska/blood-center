@@ -19,7 +19,8 @@ export function MiniArticle({ article }: { article: ArticleT }) {
             {article.title}
           </p>
         </Link>
-        <p className="">{article.content}</p>
+        <p className="text-xs text-gray-dark">10.10.2020</p>
+        <p className="my-2">{article.content}</p>
       </div>
     </div>
   );

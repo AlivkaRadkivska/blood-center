@@ -2,11 +2,10 @@ import Image from 'next/image';
 import mainPhoto from '@public/images/red-heart.jpg';
 import { AccentButton, Button } from '@/components/ui/button';
 import { Cormorant_Infant } from 'next/font/google';
-import { BloodNeedsContainer } from '@/components/blood-needs-container';
-import { CityT } from '@/types/city';
 import Link from 'next/link';
 import Title from '@/components/ui/title';
 import QnA from '@/components/questions-n-answers/qna';
+import BloodNeedsModal from '@/components/blood-needs/blood-needs-modal';
 
 const accentFont = Cormorant_Infant({
   subsets: ['latin', 'cyrillic'],
@@ -14,10 +13,6 @@ const accentFont = Cormorant_Infant({
 });
 
 export default async function HomePage() {
-  const cities: CityT[] = await fetch(
-    `${process.env.BACKEND_URL}/api/cities`
-  ).then((res) => res.json());
-
   return (
     <>
       <section className="flex flex-col w-full min-h-screen items-center justify-center py-16">
@@ -57,9 +52,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="flex flex-col w-full items-center justify-center py-2">
-        <Title>Актуальні потреби у крові</Title>
-        <BloodNeedsContainer cities={cities} />
+      <section>
+        <Title>Як працює донація крові</Title>
+        <p className="text-green">Desc</p>
       </section>
 
       <section className="flex flex-col w-full items-center justify-center py-2">
@@ -67,10 +62,7 @@ export default async function HomePage() {
         <QnA />
       </section>
 
-      <section>
-        <Title>Як працює донація крові</Title>
-        <p className="text-green">Desc</p>
-      </section>
+      <BloodNeedsModal />
     </>
   );
 }

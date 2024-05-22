@@ -1,4 +1,5 @@
-import { LocationsContainer } from '@/components/locations-container';
+import BloodNeedsModal from '@/components/blood-needs/blood-needs-modal';
+import { LocationsContainer } from '@/components/locations/locations-container';
 import CitySelect from '@/components/ui/city-list';
 import Search from '@/components/ui/search';
 import Title from '@/components/ui/title';
@@ -25,13 +26,16 @@ export default async function LocationsPage({
       <Title>
         <h1>Усі пункти прийому</h1>
       </Title>
+
       <div className="flex items-start p-1 w-full max-w-[800px] justify-stretch gap-3">
         <div className="flex flex-col items-start w-[50%]">
-          <Search placeholder="Вул. здоров'я, 1, м. Житомир" />
+          <Search placeholder="Вул. Здоров'я, 1, м. Житомир" />
           <CitySelect cities={cities} />
         </div>
         <LocationsContainer region={region} search={search} />
       </div>
+
+      <BloodNeedsModal />
     </div>
   );
 }

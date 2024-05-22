@@ -11,8 +11,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
     const params = new URLSearchParams(searchParams);
 
     if (search) {
-      // params.set('page', '1');
       params.delete('page');
+      params.delete('region');
       params.set('search', search);
     } else {
       params.delete('search');
@@ -22,13 +22,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, 400);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="relative flex flex-1">
       <label htmlFor="search" className="sr-only">
         Пошук
       </label>
       <input
-        className="ease-in-out duration-200 px-4 py-1 border-2 border-purple text-purple rounded-lg pl-8
-        focus:outline-red w-full min-w-40"
+        className="ease-in-out duration-200 px-4 py-1 border-2 border-purple text-purple rounded-lg focus:outline-red w-full min-w-40 pl-8"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);

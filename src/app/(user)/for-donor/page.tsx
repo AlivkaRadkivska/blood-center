@@ -1,3 +1,4 @@
+import BloodNeedsModal from '@/components/blood-needs/blood-needs-modal';
 import QuestionForm from '@/components/questions-n-answers/question-form';
 import Title from '@/components/ui/title';
 
@@ -14,6 +15,8 @@ export default async function ForDonorPage() {
       <section className="flex flex-col w-full items-center justify-start py-2">
         <QuestionForm />
       </section>
+
+      <BloodNeedsModal />
     </>
   );
 }
