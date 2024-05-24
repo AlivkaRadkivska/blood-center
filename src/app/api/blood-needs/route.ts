@@ -1,7 +1,13 @@
+import { validateUser } from '@/utils/auth-helper';
+import { getAuth } from '@clerk/nextjs/server';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest): Promise<Response> {
+  const { userId } = getAuth(request);
+  if (!(await validateUser(userId)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
+
   const data = await request.json();
   const { bloodTypes, cityId } = data;
 

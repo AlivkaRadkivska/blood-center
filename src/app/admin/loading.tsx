@@ -1,3 +1,5 @@
 export default function Loading() {
-  return <p>Зачекате хвилинку, сторінка завантажується...</p>;
+  return (
+    <p className="text-xl">Зачекате хвилинку, сторінка завантажується...</p>
+  );
 }

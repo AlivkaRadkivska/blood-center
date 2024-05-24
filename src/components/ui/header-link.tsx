@@ -1,16 +1,18 @@
 import Link from 'next/link';
 
-export default function HeaderLink({
-  href,
-  label,
-}: {
+interface HeaderLinkProps {
   href: string;
   label: string;
-}) {
+  active?: boolean;
+}
+
+export default function HeaderLink({ href, label, active }: HeaderLinkProps) {
   return (
     <Link
       href={href}
-      className="text-red hover:text-purple hover:underline font-bold ease-in-out"
+      className={`text-purple hover:text-red hover:underline font-bold ease-in-out ${
+        active ? 'underline' : ''
+      }`}
     >
       {label}
     </Link>

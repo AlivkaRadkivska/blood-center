@@ -17,9 +17,9 @@ export default async function LocationsPage({
 }: LocationsPageProps) {
   const region = searchParams?.region || '';
   const search = searchParams?.search || '';
-  const cities: CityT[] = await fetch(
-    `${process.env.BACKEND_URL}/api/cities`
-  ).then((res) => res.json());
+  const cities: CityT[] = await fetch(`${process.env.BACKEND_URL}/api/cities`, {
+    next: { revalidate: 10 },
+  }).then((res) => res.json());
 
   return (
     <div className="w-full flex flex-col items-center justify-center mt-20">

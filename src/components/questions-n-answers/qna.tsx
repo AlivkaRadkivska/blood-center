@@ -41,7 +41,7 @@ export default function QnA() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('/api/questions?active=true')
+    fetch('/api/questions?active=true', { next: { revalidate: 10 } })
       .then((res) => res.json())
       .then((res) => {
         setQuestions(res);

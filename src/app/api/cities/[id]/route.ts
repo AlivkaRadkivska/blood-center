@@ -1,3 +1,5 @@
+import { validateUser } from '@/utils/auth-helper';
+import { getAuth } from '@clerk/nextjs/server';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
@@ -18,9 +20,13 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
+  const { userId } = getAuth(request);
+  if (!(await validateUser(userId)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
+
   const id: string = params.id;
-  const data = await request.json();
-  const { name } = data;
+  const data = await request.formData();
+  const name = data.get('name') as unknown as string;
 
   const city = await db.city.findUnique({ where: { name } });
   if (city)
@@ -30,7 +36,7 @@ export async function PATCH(
     );
 
   const res = await db.city.update({
-    data,
+    data: { name },
     where: { id },
   });
 
@@ -40,9 +46,13 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
+  const { userId } = getAuth(request);
+  if (!(await validateUser(userId)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
+
   const id: string = params.id;
 
   const donationLocation = await db.donationLocation.findFirst({

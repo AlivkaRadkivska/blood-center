@@ -1,5 +1,6 @@
 'use server';
 import { db } from '@db/index';
+
 export async function getArticlesNumber(
   active: boolean,
   search: string,

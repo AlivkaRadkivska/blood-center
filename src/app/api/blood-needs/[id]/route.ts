@@ -1,3 +1,5 @@
+import { validateUser } from '@/utils/auth-helper';
+import { getAuth } from '@clerk/nextjs/server';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
@@ -21,6 +23,10 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
+  const { userId } = getAuth(request);
+  if (!(await validateUser(userId)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
+
   const id: string = params.id;
   const data = await request.json();
   const { bloodTypes } = data;
@@ -39,9 +45,13 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
+  const { userId } = getAuth(request);
+  if (!(await validateUser(userId)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
+
   const id: string = params.id;
 
   const res = await db.bloodNeeds.delete({ where: { id } });
