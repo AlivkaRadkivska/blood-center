@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 interface AdminCitiesPageProps {
   searchParams?: {
-    region?: string;
     search?: string;
   };
 }

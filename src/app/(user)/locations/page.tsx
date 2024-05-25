@@ -7,7 +7,7 @@ import { CityT } from '@/types/city';
 
 interface LocationsPageProps {
   searchParams?: {
-    region?: string;
+    city?: string;
     search?: string;
   };
 }
@@ -15,8 +15,8 @@ interface LocationsPageProps {
 export default async function LocationsPage({
   searchParams,
 }: LocationsPageProps) {
-  const region = searchParams?.region || '';
-  const search = searchParams?.search || '';
+  const city: string = searchParams?.city || '';
+  const search: string = searchParams?.search || '';
   const cities: CityT[] = await fetch(`${process.env.BACKEND_URL}/api/cities`, {
     next: { revalidate: 10 },
   }).then((res) => res.json());
@@ -32,7 +32,7 @@ export default async function LocationsPage({
           <Search placeholder="Вул. Здоров'я, 1, м. Житомир" />
           <CitySelect cities={cities} />
         </div>
-        <LocationsContainer region={region} search={search} />
+        <LocationsContainer city={city} search={search} />
       </div>
 
       <BloodNeedsModal />

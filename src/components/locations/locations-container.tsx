@@ -1,23 +1,20 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { DonationLocationT } from '@/types/donation-location';
+import { LocationT } from '@/types/location';
 
 interface LocationsContainerProps {
-  region: string;
+  city: string;
   search: string;
 }
 
-export function LocationsContainer({
-  region,
-  search,
-}: LocationsContainerProps) {
+export function LocationsContainer({ city, search }: LocationsContainerProps) {
   const [loading, setLoading] = useState<boolean>(true);
-  const [locations, setLocations] = useState<DonationLocationT[]>();
+  const [locations, setLocations] = useState<LocationT[]>();
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/locations?cityId=${region}&search=${search}`, {
+    fetch(`/api/locations?cityId=${city}&search=${search}`, {
       next: { revalidate: 10 },
     })
       .then(async (res) => await res.json())
@@ -28,7 +25,7 @@ export function LocationsContainer({
       .catch(() => {
         setLoading(false);
       });
-  }, [region, search]);
+  }, [city, search]);
 
   return (
     <div className="flex flex-col w-full items-start justify-start">
@@ -38,8 +35,8 @@ export function LocationsContainer({
         locations?.length > 0 &&
         locations.map((item) => (
           <Link
-            key={item.id.toString()}
-            href={item.url.toString()}
+            key={item.id}
+            href={item.url}
             target="_blank"
             className="underline underline-offset-2"
           >

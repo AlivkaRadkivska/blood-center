@@ -6,12 +6,12 @@ import { useRouter } from 'next/navigation';
 import { CityT } from '@/types/city';
 
 export function CityForm({ city }: { city?: CityT }) {
-  const [error, setError] = useState<string | null>();
   const router = useRouter();
+  const [error, setError] = useState<string | null>();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    setError(null);
     e.preventDefault();
+    setError(null);
 
     const formData = new FormData(e.currentTarget);
     const response = await fetch(`/api/cities${city ? '/' + city.id : ''}`, {
@@ -23,16 +23,13 @@ export function CityForm({ city }: { city?: CityT }) {
     if ('id' in data) router.push('/admin/cities');
     if ('error' in data) setError(data.error);
   }
+
   return (
     <>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-3 mt-4 w-full max-w-[600px]"
       >
-        {/* {city && (
-          <input type="text" name="id" value={city.id} hidden readOnly />
-        )} */}
-
         <Input
           type="text"
           name="name"
@@ -46,6 +43,7 @@ export function CityForm({ city }: { city?: CityT }) {
           *Обов&apos;язкове поле для заповнення
         </p>
         {error && <p className="text-sm text-red">{error}</p>}
+
         <Button>
           <input type="submit" name="submit" value="Надіслати" />
         </Button>

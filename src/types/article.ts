@@ -1,7 +1,7 @@
 export interface ArticleT {
-  id: String;
-  title: String;
-  photo: String;
-  content: String;
-  active: Boolean;
+  id: string;
+  title: string;
+  photo: string;
+  content: string;
+  active: boolean;
 }

@@ -1,42 +1,42 @@
 import { validateUser } from '@/utils/auth-helper';
-import { getAuth } from '@clerk/nextjs/server';
+import { handleDBRequest } from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest): Promise<Response> {
-  const { userId } = getAuth(request);
-  if (!(await validateUser(userId)))
+  if (!(await validateUser(request)))
     return Response.json({ error: 'Доступ заборонено.', status: 401 });
 
-  const data = await request.formData();
-  const name = data.get('name') as unknown as string;
+  const dbRequest = async () => {
+    const data = await request.formData();
+    const name = data.get('name') as string;
+    if (!name)
+      return Response.json(
+        { error: 'Надайте, будь ласка, всю інформацію.' },
+        { status: 400 }
+      );
 
-  if (!name)
-    return Response.json(
-      { error: 'Надайте, будь ласка, всю інформацію.' },
-      { status: 400 }
-    );
+    const res = await db.city.create({
+      data: { name },
+    });
 
-  const city = await db.city.findUnique({ where: { name } });
-  if (city)
-    return Response.json(
-      { error: 'Місто з такою назвою вже існує.' },
-      { status: 400 }
-    );
+    return Response.json(res);
+  };
 
-  const res = await db.city.create({
-    data: { name },
+  return handleDBRequest(dbRequest, {
+    uniqueConstraintError: 'Місто з такою назвою вже існує.',
   });
-
-  return Response.json(res);
 }
 
 export async function GET(request: NextRequest): Promise<Response> {
-  const url = request.nextUrl.searchParams;
-  const search = url.get('search');
+  const dbRequest = async () => {
+    const url = request.nextUrl.searchParams;
+    const search = url.get('search');
 
-  const res = await db.city.findMany({
-    where: { name: { contains: search ? search : '', mode: 'insensitive' } },
-  });
-  return Response.json(res);
+    const res = await db.city.findMany({
+      where: { name: { contains: search ? search : '', mode: 'insensitive' } },
+    });
+    return Response.json(res);
+  };
+  return handleDBRequest(dbRequest, { notFoundError: 'Міст не знайдено.' });
 }

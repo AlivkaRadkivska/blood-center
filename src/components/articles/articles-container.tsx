@@ -36,7 +36,7 @@ export function ArticlesContainer({
       {articles &&
         articles?.length > 0 &&
         articles.map((item) => (
-          <MiniArticle key={item.id.toString()} article={item} />
+          <MiniArticle key={item.id} article={item} />
         ))}
 
       {!loading && (!articles || articles.length === 0) && (

@@ -12,7 +12,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
     if (search) {
       params.delete('page');
-      params.delete('region');
+      params.delete('city');
       params.set('search', search);
     } else {
       params.delete('search');

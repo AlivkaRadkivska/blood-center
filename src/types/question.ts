@@ -1,6 +1,6 @@
 export interface QuestionT {
-  id: String;
-  question: String;
-  answer: String;
-  active: Boolean;
+  id: string;
+  question: string;
+  answer: string;
+  active: boolean;
 }

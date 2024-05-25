@@ -60,10 +60,7 @@ export default function QnA() {
         transitionTimeout={200}
       >
         {questions.map((item) => (
-          <AccordionItem
-            key={item.id.toString()}
-            header={item.question.toString()}
-          >
+          <AccordionItem key={item.id} header={item.question}>
             {item.answer}
           </AccordionItem>
         ))}
