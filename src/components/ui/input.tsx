@@ -6,9 +6,9 @@ interface InputProps {
   type: string;
   name: string;
   placeholder: string;
+  required: boolean;
   id?: string;
   value?: string;
-  required?: boolean;
 }
 
 export default function Input({
@@ -36,7 +36,7 @@ export default function Input({
         value={currValue}
         placeholder={placeholder}
         onChange={handleChange}
-        required={required ? required : false}
+        required={required}
         className="ease-in-out duration-200 px-4 py-1 border-2 border-purple text-purple rounded-lg
         focus:outline-red w-full min-w-40"
       />

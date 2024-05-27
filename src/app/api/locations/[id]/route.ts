@@ -9,7 +9,10 @@ export async function GET(
 ): Promise<Response> {
   const dbRequest = async () => {
     const id: string = params.id;
-    const res = await db.donationLocation.findUnique({ where: { id } });
+    const res = await db.donationLocation.findUnique({
+      where: { id },
+      include: { city: true },
+    });
 
     return Response.json(res);
   };

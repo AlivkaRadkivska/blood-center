@@ -1,6 +1,10 @@
 export interface BloodNeedsT {
   id: string;
-  lastUpdate: string;
+  lastUpdate: Date;
   bloodTypes: string[];
   cityId: string;
+  city?: {
+    id: string;
+    name: string;
+  };
 }

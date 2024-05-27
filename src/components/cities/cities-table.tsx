@@ -63,7 +63,7 @@ export function CitiesTable({ search }: { search: string }) {
       </table>
 
       {!loading && (!cities || cities.length === 0) && (
-        <p className="my-2">В базі даних міст немає.</p>
+        <p className="my-2">Міст не знайдено.</p>
       )}
     </>
   );

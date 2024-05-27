@@ -20,7 +20,7 @@ export function BloodNeedsContainer({
   });
 
   useEffect(() => {
-    fetch(`/api/blood-needs/${cityId}`, {
+    fetch(`/api/blood-needs?cityId=${cityId}`, {
       next: { revalidate: 10 },
     })
       .then(async (res) => await res.json())

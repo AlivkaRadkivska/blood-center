@@ -1,4 +1,5 @@
-import { DeleteLocation } from '@/components/locations/delete-location';
+import { DeleteDBItem } from '@/components/admin/delete-db-item';
+import Title from '@/components/ui/title';
 
 interface AdminDeleteLocationPageProps {
   params: { id: string };
@@ -7,5 +8,11 @@ interface AdminDeleteLocationPageProps {
 export default function AdminDeleteLocationPage({
   params,
 }: AdminDeleteLocationPageProps) {
-  return <DeleteLocation id={params.id} />;
+  return (
+    <>
+      <Title>Видалення пункту прийому крові</Title>
+
+      <DeleteDBItem id={params.id} table="locations" />
+    </>
+  );
 }

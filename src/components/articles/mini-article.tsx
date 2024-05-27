@@ -8,7 +8,7 @@ export function MiniArticle({ article }: { article: ArticleT }) {
     <div className="w-full p-2 flex gap-2">
       <Image
         className="border-2 rounded border-purple ease-in-out"
-        src={`/uploads/articles/img.jpg`}
+        src={`/uploads/articles/${article.photo}`}
         alt="article_image"
         width={150}
         height={120}

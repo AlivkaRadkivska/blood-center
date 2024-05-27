@@ -1,4 +1,5 @@
-import { DeleteCity } from '@/components/cities/delete-city';
+import { DeleteDBItem } from '@/components/admin/delete-db-item';
+import Title from '@/components/ui/title';
 
 interface AdminDeleteCityPageProps {
   params: { id: string };
@@ -7,5 +8,11 @@ interface AdminDeleteCityPageProps {
 export default function AdminDeleteCityPage({
   params,
 }: AdminDeleteCityPageProps) {
-  return <DeleteCity id={params.id} />;
+  return (
+    <>
+      <Title>Видалення міста</Title>
+
+      <DeleteDBItem id={params.id} table="cities" />
+    </>
+  );
 }
