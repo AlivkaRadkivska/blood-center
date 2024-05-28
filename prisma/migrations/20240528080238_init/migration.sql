@@ -1,9 +1,12 @@
 -- CreateTable
 CREATE TABLE "Article" (
     "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "author" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "content" TEXT NOT NULL,
+    "lastUpdate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "active" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Article_pkey" PRIMARY KEY ("id")
@@ -12,6 +15,7 @@ CREATE TABLE "Article" (
 -- CreateTable
 CREATE TABLE "Question" (
     "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "question" TEXT NOT NULL,
     "answer" TEXT NOT NULL DEFAULT '',
     "active" BOOLEAN NOT NULL DEFAULT false,

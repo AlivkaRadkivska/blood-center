@@ -8,15 +8,19 @@ datasource db {
 }
 
 model Article {
-  id      String  @id @default(uuid())
-  title   String
-  photo   String
-  content String
-  active  Boolean @default(true)
+  id          String   @id @default(uuid())
+  photo       String
+  title       String
+  author      String
+  description String
+  content     String
+  lastUpdate  DateTime @default(now())
+  active      Boolean  @default(true)
 }
 
 model Question {
   id       String  @id @default(uuid())
+  email    String
   question String
   answer   String  @default("")
   active   Boolean @default(false)

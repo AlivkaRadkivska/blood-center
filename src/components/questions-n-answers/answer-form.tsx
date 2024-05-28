@@ -32,7 +32,7 @@ export function AnswerForm({ question }: { question: QuestionT }) {
         className="flex flex-col gap-3 mt-4 w-full max-w-[600px]"
       >
         <p className="text-purple text-lg">{question.question}</p>
-        {/* <p className="text-purple mb-2">Автор питання: {question.email}</p> */}
+        <p className="text-purple mb-2">Автор питання: {question.email}</p>
         <Input
           type="text"
           name="answer"

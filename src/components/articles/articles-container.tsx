@@ -31,13 +31,11 @@ export function ArticlesContainer({
   }, [search, currentPage]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-3 w-full max-w-[800px]">
+    <div className="flex flex-col items-center justify-center p-3 w-full max-w-[900px]">
       {loading && <div>Завантаження статей...</div>}
       {articles &&
         articles?.length > 0 &&
-        articles.map((item) => (
-          <MiniArticle key={item.id} article={item} />
-        ))}
+        articles.map((item) => <MiniArticle key={item.id} article={item} />)}
 
       {!loading && (!articles || articles.length === 0) && (
         <p className="my-2 max-w-96 text-center">Статей не знайдено.</p>

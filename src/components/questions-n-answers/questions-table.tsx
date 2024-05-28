@@ -32,7 +32,7 @@ export function QuestionsTable({ search }: { search: string }) {
             <thead className="bg-gray-light">
               <tr>
                 <th className="w-[30px]">№</th>
-                {/* <th>Автор</th> */}
+                <th>Автор питання</th>
                 <th>Питання</th>
                 <th>Відповідь</th>
                 <th>Активність</th>
@@ -43,7 +43,7 @@ export function QuestionsTable({ search }: { search: string }) {
               {questions.map((item, index) => (
                 <tr key={item.id}>
                   <td>{++index}</td>
-                  {/* <td>{item.email}</td> */}
+                  <td>{item.email}</td>
                   <td>{item.question}</td>
                   <td>{item.answer}</td>
                   <td

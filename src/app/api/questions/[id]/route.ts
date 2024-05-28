@@ -28,7 +28,7 @@ export async function PATCH(
     const id: string = params.id;
     const data = await request.formData();
     const answer = data.get('answer') as string;
-    const active = Boolean(data.get('active') as string);
+    const active = (data.get('active') as string) === 'true';
 
     const res = await db.question.update({
       data: { answer, active },

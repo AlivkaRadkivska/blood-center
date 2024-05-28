@@ -11,6 +11,8 @@ export async function POST(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const data = await request.formData();
     const title = data.get('title') as string;
+    const description = data.get('description') as string;
+    const author = data.get('author') as string;
     const content = data.get('content') as string;
     const photoFile = data.get('photo') as unknown as File;
 
@@ -25,7 +27,13 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
 
     const res = await db.article.create({
-      data: { title, photo: uploadingRes.imageName, content },
+      data: {
+        photo: uploadingRes.imageName,
+        title,
+        author,
+        description,
+        content,
+      },
     });
     return Response.json(res);
   };

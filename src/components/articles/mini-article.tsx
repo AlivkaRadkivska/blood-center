@@ -14,13 +14,15 @@ export function MiniArticle({ article }: { article: ArticleT }) {
         height={120}
       />
       <div>
-        <Link href={`/news/articles/${article.id}`}>
+        <Link href={`/news/article/${article.id}`}>
           <p className="text-lg text-purple hover:underline hover:text-red">
             {article.title}
           </p>
         </Link>
-        <p className="text-xs text-gray-dark">10.10.2020</p>
-        <p className="my-2">{article.content}</p>
+        <p className="text-xs text-gray-dark">
+          {article.author} | {new Date(article.lastUpdate).toDateString()}
+        </p>
+        <p className="my-2 text-s">{article.description}</p>
       </div>
     </div>
   );

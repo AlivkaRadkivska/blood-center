@@ -5,6 +5,7 @@ import { NextRequest } from 'next/server';
 export async function POST(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const data = await request.formData();
+    const email = data.get('email') as string;
     const question = data.get('question') as string;
 
     if (!question)
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
 
     const res = await db.question.create({
-      data: { question },
+      data: { email, question },
     });
     return Response.json(res);
   };
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 export async function GET(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const url = request.nextUrl.searchParams;
-    const active = Boolean(url.get('active') as unknown);
+    const active = (url.get('active') as string) === 'true';
     const search = url.get('search');
     if (active) {
       const res = await db.question.findMany({ where: { active } });

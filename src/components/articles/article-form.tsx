@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { ArticleT } from '@/types/article';
 import ActiveRadio from '../ui/active-radio';
 import Image from 'next/image';
+import Textarea from '../ui/textarea';
+import { CkEditor } from '../ui/ckeditor';
 
 interface ArticleFormProps {
   article?: ArticleT;
@@ -13,11 +15,12 @@ interface ArticleFormProps {
 
 export function ArticleForm({ article }: ArticleFormProps) {
   const router = useRouter();
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<string | undefined>();
+  const [content, setContent] = useState<string | undefined>(article?.content);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setError(null);
+    setError(undefined);
 
     const formData = new FormData(e.currentTarget);
     const response = await fetch(
@@ -74,13 +77,28 @@ export function ArticleForm({ article }: ArticleFormProps) {
         />
         <Input
           type="text"
-          name="content"
-          label="Вміст статті*:"
-          placeholder="Текст"
+          name="author"
+          label="Автор статті*:"
+          placeholder="Ім'я Прізвище"
           required={true}
-          value={article ? article.content : undefined}
+          value={article ? article.author : undefined}
         />
-        {/* others */}
+        <Textarea
+          name="description"
+          label="Опис статті*:"
+          placeholder="Короткий опис"
+          required={true}
+          value={article ? article.description : undefined}
+        />
+        <input
+          type="text"
+          name="content"
+          id="content"
+          value={content ? content : ''}
+          readOnly
+          hidden
+        />
+        <CkEditor data={article?.content} onChange={setContent} />
         <ActiveRadio
           label="Показувати на сайті?"
           name="active"

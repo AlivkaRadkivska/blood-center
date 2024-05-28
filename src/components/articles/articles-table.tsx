@@ -35,9 +35,10 @@ export function ArticlesTable({ search }: { search: string }) {
                 <th className="w-[30px]">№</th>
                 <th>Фото</th>
                 <th>Заголовок</th>
+                <th>Автор</th>
                 <th>Опис</th>
-                {/* <th>Автор</th> */}
-                {/* <th>Дата створення</th> */}
+                <th>Контент</th>
+                <th>Дата останньої зміни</th>
                 <th>Активність</th>
                 <th className="w-1/3">Дії</th>
               </tr>
@@ -56,10 +57,10 @@ export function ArticlesTable({ search }: { search: string }) {
                     />
                   </td>
                   <td>{item.title}</td>
+                  <td>{item.author}</td>
+                  <td>{item.description.slice(1, 50) + '...'}</td>
                   <td>...</td>
-                  {/* <td>{item.description}</td> */}
-                  {/* <td>{item.author}</td> */}
-                  {/* <td>{item.date}</td> */}
+                  <td>{new Date(item.lastUpdate).toDateString()}</td>
                   <td
                     className={
                       item.active ? 'text-2xl text-green' : 'text-2xl text-red'

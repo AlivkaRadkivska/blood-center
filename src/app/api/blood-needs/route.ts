@@ -19,7 +19,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
 
     const res = await db.bloodNeeds.create({
-      data: { bloodTypes, cityId, lastUpdate: new Date(Date.now()) },
+      data: { bloodTypes, cityId },
     });
     return Response.json(res);
   };
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     const search = url.get('search');
 
     if (cityId) {
-      const res = await db.bloodNeeds.findMany({ where: { cityId } });
+      const res = await db.bloodNeeds.findUnique({ where: { cityId } });
       return Response.json(res);
     }
 

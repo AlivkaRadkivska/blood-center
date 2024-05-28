@@ -29,7 +29,10 @@ export async function PATCH(
     const id: string = params.id;
     const data = await request.formData();
     const title = data.get('title') as string;
+    const description = data.get('description') as string;
+    const author = data.get('author') as string;
     const content = data.get('content') as string;
+    const active = (data.get('active') as string) === 'true';
     const photoFile = data.get('photo') as unknown as File;
     let photoName = data.get('oldPhoto') as string;
 
@@ -45,7 +48,15 @@ export async function PATCH(
     }
 
     const res = await db.article.update({
-      data: { title, content, photo: photoName },
+      data: {
+        photo: photoName,
+        title,
+        author,
+        description,
+        content,
+        active,
+        lastUpdate: new Date(Date.now()),
+      },
       where: { id },
     });
 
