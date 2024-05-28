@@ -24,7 +24,7 @@ export function QuestionsTable({ search }: { search: string }) {
 
   return (
     <>
-      {loading && <div>Завантаження міст...</div>}
+      {loading && <div>Завантаження питань...</div>}
 
       <table className="text-center w-full divide-y divide-gray border-spacing-2 table-fixed overflow-x-scroll">
         {questions && !loading && questions?.length > 0 && (

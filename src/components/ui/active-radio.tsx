@@ -23,6 +23,7 @@ export default function ActiveRadio({ label, name, value }: InputProps) {
             setCurrValue('true');
           }}
           checked={currValue === 'true'}
+          value="true"
         />
       </label>
       <label>
@@ -35,6 +36,7 @@ export default function ActiveRadio({ label, name, value }: InputProps) {
             setCurrValue('false');
           }}
           checked={currValue === 'false'}
+          value="false"
         />
       </label>
     </div>
