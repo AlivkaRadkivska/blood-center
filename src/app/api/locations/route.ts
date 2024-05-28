@@ -1,23 +1,68 @@
+import { validateUser } from '@/utils/auth-helper';
+import { handleDBRequest } from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest): Promise<Response> {
-  const data = await request.json();
-  const { address, url, cityId } = data;
+  if (!(await validateUser(request)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
 
-  if (!address || !url || !cityId)
-    return Response.json(
-      { error: 'Надайте, будь ласка, всю інформацію.' },
-      { status: 400 }
-    );
+  const dbRequest = async () => {
+    const url = await request.formData();
+    const address = url.get('address') as string;
+    const locationUrl = url.get('url') as string;
+    const cityId = url.get('city') as string;
+    if (!address || !locationUrl || !cityId)
+      return Response.json(
+        { error: 'Надайте, будь ласка, всю інформацію.' },
+        { status: 400 }
+      );
 
-  const res = await db.donationLocation.create({
-    data: { address, url, cityId },
-  });
-  return Response.json(res);
+    const res = await db.donationLocation.create({
+      data: { address, url: locationUrl, cityId },
+    });
+    return Response.json(res);
+  };
+
+  return handleDBRequest(dbRequest, {});
 }
 
-export async function GET(): Promise<Response> {
-  const res = await db.donationLocation.findMany();
-  return Response.json(res);
+export async function GET(request: NextRequest): Promise<Response> {
+  const dbRequest = async () => {
+    const url = request.nextUrl.searchParams;
+    const cityId = url.get('cityId');
+    const search = url.get('search');
+
+    if (cityId) {
+      const res = await db.donationLocation.findMany({
+        where: {
+          cityId,
+        },
+      });
+      return Response.json(res);
+    }
+
+    const res = await db.donationLocation.findMany({
+      where: {
+        OR: [
+          {
+            address: { contains: search ? search : '', mode: 'insensitive' },
+          },
+          {
+            city: {
+              name: { contains: search ? search : '', mode: 'insensitive' },
+            },
+          },
+        ],
+      },
+      include: {
+        city: true,
+      },
+    });
+    return Response.json(res);
+  };
+
+  return handleDBRequest(dbRequest, {
+    notFoundError: 'Пунктів прийому крові не знайдено.',
+  });
 }

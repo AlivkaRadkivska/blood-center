@@ -1,21 +1,27 @@
-import { Lora } from 'next/font/google';
+import AdminHeader from '@/components/admin-header';
+import { Signout } from '@/components/admin/sign-out';
+import { getUserRole } from '@/utils/auth-helper';
+import { currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
-const font = Lora({ subsets: ['latin', 'cyrillic'] });
-
-export default function RootLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <body className={font.className}>
-      <header className="w-full flex items-start justify-center">
-        Admin Header
-      </header>
+  const user = await currentUser();
+  if (!user) redirect('/no-access');
 
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+  const role = await getUserRole(user.id);
+  if (user && role != 'org:admin') return <Signout />;
+
+  return (
+    <>
+      <AdminHeader />
+
+      <main className="flex min-h-screen flex-col items-center justify-start p-8 pt-14">
         {children}
       </main>
-    </body>
+    </>
   );
 }

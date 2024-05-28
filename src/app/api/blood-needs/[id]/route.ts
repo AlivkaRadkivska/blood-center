@@ -1,49 +1,85 @@
+import { validateUser } from '@/utils/auth-helper';
+import { handleDBRequest } from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
-  const id: string = params.id;
+  const dbRequest = async () => {
+    const id: string = params.id;
+    const url = request.nextUrl.searchParams;
+    const cityId = url.get('cityId');
 
-  const res = await db.bloodNeeds.findUnique({ where: { id } });
+    if (cityId) {
+      const res = await db.bloodNeeds.findUnique({
+        where: { cityId },
+        include: { city: true },
+      });
+      return Response.json(res);
+    }
 
-  if (!res)
-    return Response.json(
-      { error: 'Потреби крові за цим id не знайдено.' },
-      { status: 404 }
-    );
-  return Response.json(res);
+    const res = await db.bloodNeeds.findUnique({
+      where: { id },
+      include: { city: true },
+    });
+    return Response.json(res);
+  };
+
+  return handleDBRequest(dbRequest, {
+    notFoundError: 'Потреби у крові не знайдено.',
+  });
 }
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
-  const id: string = params.id;
-  const data = await request.json();
-  const { bloodTypes } = data;
+  if (!(await validateUser(request)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
 
-  const res = await db.bloodNeeds.update({
-    data: { bloodTypes, lastUpdate: new Date(Date.now()) },
-    where: { id },
+  const dbRequest = async () => {
+    const id: string = params.id;
+    const url = await request.formData();
+    const bloodTypesStr = url.get('bloodTypes') as string;
+    const cityId = url.get('city') as string;
+    const bloodTypes = bloodTypesStr.replace(' ', '').split(',');
+    if (!cityId || !bloodTypes || !cityId)
+      return Response.json(
+        { error: 'Надайте, будь ласка, всю інформацію.' },
+        { status: 400 }
+      );
+
+    const res = await db.bloodNeeds.update({
+      data: { cityId, bloodTypes, lastUpdate: new Date(Date.now()) },
+      where: { id },
+    });
+    return Response.json(res);
+  };
+
+  return handleDBRequest(dbRequest, {
+    notFoundError: 'Потреби у крові не знайдено.',
+    uniqueConstraintError:
+      'Дані про потреби у крові в цьому місті вже є в базі.',
   });
-
-  if (!res)
-    return Response.json(
-      { error: 'Потреби крові за цим id не знайдено.' },
-      { status: 404 }
-    );
-  return Response.json(res);
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
-  const id: string = params.id;
+  if (!(await validateUser(request)))
+    return Response.json({ error: 'Доступ заборонено.', status: 401 });
 
-  const res = await db.bloodNeeds.delete({ where: { id } });
-  return Response.json(res);
+  const dbRequest = async () => {
+    const id: string = params.id;
+
+    const res = await db.bloodNeeds.delete({ where: { id } });
+    return Response.json(res);
+  };
+
+  return handleDBRequest(dbRequest, {
+    notFoundError: 'Потреби у крові не знайдено.',
+  });
 }

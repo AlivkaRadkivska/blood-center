@@ -1,0 +1,17 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-lates
+
+    steps:
+      - uses: actions/checkout@v2-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install modules
+        run: npm i
+      - name: Run ESLint
+        run: eslint .

@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+ul {
+  @apply list-disc;
+  @apply ml-3;
+}
+
+ol {
+  @apply normal-nums;
+  @apply ml-3;
+}
+
+bold {
+  @apply font-bold;
+}
+
+i {
+  @apply italic;
+}
+
+blockquote {
+  @apply bg-gray-light;
+}
