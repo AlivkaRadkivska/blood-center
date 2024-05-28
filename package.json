@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma-seed": "ts-node prisma/seed.ts"
+    "prisma-seed": "ts-node prisma/seed.ts",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
