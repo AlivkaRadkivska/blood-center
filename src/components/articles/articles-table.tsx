@@ -40,7 +40,7 @@ export function ArticlesTable({ search }: { search: string }) {
                 <th>Контент</th>
                 <th>Дата останньої зміни</th>
                 <th>Активність</th>
-                <th className="w-1/3">Дії</th>
+                <th className="w-1/4">Дії</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-light">
@@ -50,7 +50,7 @@ export function ArticlesTable({ search }: { search: string }) {
                   <td>
                     <Image
                       className="border-2 rounded border-purple ease-in-out"
-                      src={`/uploads/articles/${item.photo}`}
+                      src={item.photo}
                       alt="article_image"
                       width={70}
                       height={50}

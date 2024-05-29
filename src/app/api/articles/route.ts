@@ -16,7 +16,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const content = data.get('content') as string;
     const photoFile = data.get('photo') as unknown as File;
 
-    const uploadingRes = await uploadImage('articles', photoFile);
+    const uploadingRes = await uploadImage(photoFile);
     if ('message' in uploadingRes)
       return Response.json({ error: uploadingRes.message }, { status: 400 });
 
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     const res = await db.article.create({
       data: {
-        photo: uploadingRes.imageName,
+        photo: uploadingRes.imageUrl,
         title,
         author,
         description,
@@ -46,12 +46,13 @@ export async function GET(request: NextRequest): Promise<Response> {
     const url = request.nextUrl.searchParams;
     const active = (url.get('active') as unknown) == 'true' || undefined;
     const search = url.get('search') as string;
+    const take = (url.get('take') as unknown as number) || 5;
     const page = url.get('page') as unknown as number;
 
     const paginationOptions: { take?: number; skip?: number } = page
       ? {
-          take: 5,
-          skip: (page - 1) * 5,
+          take: take,
+          skip: (page - 1) * take,
         }
       : {};
 

@@ -52,7 +52,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="flex flex-col w-full min-h-screen items-center justify-center py-16">
+      <section className="flex flex-col w-full items-center justify-center py-16">
         <Title>Як працює донація крові</Title>
         <p className="text-green">Desc</p>
       </section>

@@ -55,15 +55,38 @@ export async function handleDBRequest(
   }
 }
 
-export async function getArticlesNumber(
-  active: boolean,
-  search: string,
+export async function getDBRowsNumber(
+  tableName: string,
+  where: {},
   limit: number
-) {
-  const number = db.article
-    .count({
-      where: { active, title: { contains: search, mode: 'insensitive' } },
-    })
-    .then((res: number) => Math.ceil(res / limit));
-  return number;
+): Promise<number | { error: string }> {
+  try {
+    switch (tableName) {
+      case 'article':
+        return db.article
+          .count(where)
+          .then((res: number) => Math.ceil(res / limit));
+      case 'city':
+        return db.city
+          .count(where)
+          .then((res: number) => Math.ceil(res / limit));
+      case 'bloodNeeds':
+        return db.bloodNeeds
+          .count(where)
+          .then((res: number) => Math.ceil(res / limit));
+      case 'question':
+        return db.question
+          .count(where)
+          .then((res: number) => Math.ceil(res / limit));
+      case 'donationLocation':
+        return db.donationLocation
+          .count(where)
+          .then((res: number) => Math.ceil(res / limit));
+      default:
+        return { error: 'Таблицю не знайдено.' };
+    }
+  } catch (e) {
+    console.log(e);
+    return { error: 'Щось пішло не так.' };
+  }
 }

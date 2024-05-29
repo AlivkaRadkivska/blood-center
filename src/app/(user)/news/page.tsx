@@ -2,7 +2,7 @@ import { ArticlesContainer } from '@components/articles/articles-container';
 import Search from '@/components/ui/search';
 import Title from '@/components/ui/title';
 import Pagination from '@/components/ui/pagination';
-import { getArticlesNumber } from '@/utils/db-helper';
+import { getDBRowsNumber } from '@/utils/db-helper';
 
 interface NewsPageProps {
   searchParams?: {
@@ -14,7 +14,21 @@ interface NewsPageProps {
 export default async function NewsPage({ searchParams }: NewsPageProps) {
   const search = searchParams?.search || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await getArticlesNumber(true, search, 5);
+  const totalPages = await getDBRowsNumber(
+    'articles',
+    {
+      active: true,
+      OR: [
+        {
+          title: { contains: search ? search : '', mode: 'insensitive' },
+        },
+        {
+          content: { contains: search ? search : '', mode: 'insensitive' },
+        },
+      ],
+    },
+    5
+  );
 
   return (
     <div className="w-full flex flex-col items-center justify-center mt-20">
@@ -29,7 +43,9 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
       <ArticlesContainer search={search} currentPage={currentPage} />
 
       <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
+        <Pagination
+          totalPages={typeof totalPages === 'number' ? totalPages : 1}
+        />
       </div>
     </div>
   );

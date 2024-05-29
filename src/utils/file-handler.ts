@@ -1,8 +1,5 @@
-import { writeFile } from 'fs/promises';
 import { v4 as uuid } from 'uuid';
-import fs from 'fs/promises';
-
-const uploadDir = './public/uploads';
+import { put, del } from '@vercel/blob';
 
 function getNewImageName(name: string) {
   let newName = uuid();
@@ -10,30 +7,27 @@ function getNewImageName(name: string) {
 }
 
 export async function uploadImage(
-  subDir: string,
   image: File
-): Promise<{ imageName: string } | { message: string }> {
+): Promise<{ imageUrl: string } | { message: string }> {
   if (!image.type.startsWith('image'))
     return { message: 'Файл має бути зображенням.' };
 
   const newImageName = getNewImageName(image.name);
-  const buffer = Buffer.from(await image.arrayBuffer());
 
   try {
-    await writeFile(`${uploadDir}/${subDir}/${newImageName}`, buffer);
+    const blob = await put(newImageName, image, {
+      access: 'public',
+    });
+    return { imageUrl: blob.url };
   } catch (error) {
     console.log(error);
+    return { message: 'Щось пішло не так.' };
   }
-
-  return { imageName: newImageName };
 }
 
-export async function deleteImage(
-  subDir: string,
-  newImageName: string
-): Promise<void> {
+export async function deleteImage(imageUrl: string): Promise<void> {
   try {
-    await fs.unlink(`${uploadDir}/${subDir}/${newImageName}`);
+    del(imageUrl);
   } catch (error) {
     console.log(error);
   }

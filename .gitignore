@@ -37,8 +37,5 @@ next-env.d.ts
 # database
 docker-compose.yml
 
-# uploads
-public/uploads/articles/*
-
 # Sentry Config File
 .env.sentry-build-plugin

@@ -23,3 +23,9 @@ i {
 blockquote {
   @apply bg-gray-light;
 }
+
+h2,
+h3,
+h4 {
+  @apply text-xl;
+}

@@ -52,7 +52,7 @@ export function ArticleForm({ article }: ArticleFormProps) {
           <>
             <Image
               className="border-2 rounded border-purple ease-in-out"
-              src={`/uploads/articles/${article.photo}`}
+              src={article.photo}
               alt="article_image"
               width={150}
               height={120}

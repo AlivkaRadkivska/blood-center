@@ -38,7 +38,7 @@ export function Article({ id }: { id: string }) {
           <div className="w-full md:px-5">
             <Image
               className="border-2 rounded border-purple ease-in-out object-cover m-2 float-right"
-              src={`/uploads/articles/${article.photo}`}
+              src={article.photo}
               alt="article_image"
               width={250}
               height={220}

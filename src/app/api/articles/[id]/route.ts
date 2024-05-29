@@ -34,22 +34,22 @@ export async function PATCH(
     const content = data.get('content') as string;
     const active = (data.get('active') as string) === 'true';
     const photoFile = data.get('photo') as unknown as File;
-    let photoName = data.get('oldPhoto') as string;
+    let photoUrl = data.get('oldPhoto') as string;
 
     if (photoFile.size > 0) {
-      const uploadingRes = await uploadImage('articles', photoFile);
+      const uploadingRes = await uploadImage(photoFile);
 
       if ('message' in uploadingRes)
         return Response.json({ error: uploadingRes.message }, { status: 400 });
       else {
-        deleteImage('articles', photoName);
-        photoName = uploadingRes.imageName;
+        deleteImage(photoUrl);
+        photoUrl = uploadingRes.imageUrl;
       }
     }
 
     const res = await db.article.update({
       data: {
-        photo: photoName,
+        photo: photoUrl,
         title,
         author,
         description,
@@ -74,6 +74,7 @@ export async function DELETE(
     const id: string = params.id;
 
     const res = await db.article.delete({ where: { id } });
+    deleteImage(res.photo);
     return Response.json(res);
   };
 
