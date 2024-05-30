@@ -14,7 +14,10 @@ export function BloodNeedsContainer({
   handleClosing,
 }: BloodNeedsContainerProps) {
   const [cityId, setCityId] = useState(cities[0].id);
-  const [bloodNeeds, setBloodNeeds] = useState({
+  const [bloodNeeds, setBloodNeeds] = useState<{
+    bloodTypes?: string[];
+    lastUpdate?: Date;
+  }>({
     bloodTypes: ['Завантаження...'],
     lastUpdate: new Date(),
   });

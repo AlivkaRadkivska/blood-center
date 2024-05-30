@@ -2,7 +2,7 @@ import { ArticlesContainer } from '@components/articles/articles-container';
 import Search from '@/components/ui/search';
 import Title from '@/components/ui/title';
 import Pagination from '@/components/ui/pagination';
-import { getDBRowsNumber } from '@/utils/db-helper';
+import { getArticleNumber } from '@/utils/db-helper';
 
 interface NewsPageProps {
   searchParams?: {
@@ -15,7 +15,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
   const search = searchParams?.search || '';
   const currentPage = Number(searchParams?.page) || 1;
   const limit = 1;
-  const totalPages = await getDBRowsNumber('article', limit, {
+  const totalPages = await getArticleNumber(limit, {
     active: true,
     search,
   });
@@ -26,8 +26,8 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
         <h1>Новини в світі донорства крові</h1>
       </Title>
 
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Знайти за ключовими словами у заголовку чи описі" />
+      <div className="mt-4 flex items-center justify-center gap-2 md:mt-8 w-full">
+        <Search placeholder="Знайти за ключовими словами" />
       </div>
 
       <ArticlesContainer
