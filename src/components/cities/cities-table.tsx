@@ -3,13 +3,19 @@ import { CityT } from '@/types/city';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export function CitiesTable({ search }: { search: string }) {
+interface CitiesTableProps {
+  search: string;
+  currentPage: number;
+  limit: number;
+}
+
+export function CitiesTable({ search, currentPage, limit }: CitiesTableProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [cities, setCities] = useState<CityT[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/cities/?search=${search}`, {
+    fetch(`/api/cities/?search=${search}&page=${currentPage}&take=${limit}`, {
       next: { revalidate: 10 },
     })
       .then(async (res) => await res.json())
@@ -20,7 +26,7 @@ export function CitiesTable({ search }: { search: string }) {
       .catch(() => {
         setLoading(false);
       });
-  }, [search]);
+  }, [search, currentPage, limit]);
 
   return (
     <>

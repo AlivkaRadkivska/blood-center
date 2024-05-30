@@ -1,5 +1,9 @@
 import { validateUser } from '@/utils/auth-helper';
-import { handleDBRequest } from '@/utils/db-helper';
+import {
+  handleDBRequest,
+  getPaginationOptions,
+  getSearchParams,
+} from '@/utils/db-helper';
 import { uploadImage } from '@/utils/file-handler';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
@@ -45,29 +49,15 @@ export async function GET(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const url = request.nextUrl.searchParams;
     const active = (url.get('active') as unknown) == 'true' || undefined;
-    const search = url.get('search') as string;
-    const take = (url.get('take') as unknown as number) || 5;
-    const page = url.get('page') as unknown as number;
-
-    const paginationOptions: { take?: number; skip?: number } = page
-      ? {
-          take: take,
-          skip: (page - 1) * take,
-        }
-      : {};
 
     const res = await db.article.findMany({
-      ...paginationOptions,
+      ...(await getPaginationOptions(url)),
       where: {
         active,
-        OR: [
-          {
-            title: { contains: search ? search : '', mode: 'insensitive' },
-          },
-          {
-            content: { contains: search ? search : '', mode: 'insensitive' },
-          },
-        ],
+        ...(await getSearchParams(url.get('search') as string, [
+          'title',
+          'description',
+        ])),
       },
     });
     return Response.json(res);

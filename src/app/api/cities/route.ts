@@ -1,5 +1,9 @@
 import { validateUser } from '@/utils/auth-helper';
-import { handleDBRequest } from '@/utils/db-helper';
+import {
+  handleDBRequest,
+  getPaginationOptions,
+  getSearchParams,
+} from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
@@ -31,10 +35,12 @@ export async function POST(request: NextRequest): Promise<Response> {
 export async function GET(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const url = request.nextUrl.searchParams;
-    const search = url.get('search');
 
     const res = await db.city.findMany({
-      where: { name: { contains: search ? search : '', mode: 'insensitive' } },
+      ...(await getPaginationOptions(url)),
+      where: {
+        ...(await getSearchParams(url.get('search') as string, ['name'])),
+      },
     });
     return Response.json(res);
   };

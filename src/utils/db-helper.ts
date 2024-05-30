@@ -1,6 +1,7 @@
 'use server';
 import { db } from '@db/index';
 import { Prisma } from '@prisma/client';
+import { URLSearchParams } from 'url';
 
 interface ErrorMessagesT {
   notFoundError?: string;
@@ -55,38 +56,146 @@ export async function handleDBRequest(
   }
 }
 
-export async function getDBRowsNumber(
-  tableName: string,
-  where: {},
-  limit: number
-): Promise<number | { error: string }> {
-  try {
-    switch (tableName) {
-      case 'article':
-        return db.article
-          .count(where)
-          .then((res: number) => Math.ceil(res / limit));
-      case 'city':
-        return db.city
-          .count(where)
-          .then((res: number) => Math.ceil(res / limit));
-      case 'bloodNeeds':
-        return db.bloodNeeds
-          .count(where)
-          .then((res: number) => Math.ceil(res / limit));
-      case 'question':
-        return db.question
-          .count(where)
-          .then((res: number) => Math.ceil(res / limit));
-      case 'donationLocation':
-        return db.donationLocation
-          .count(where)
-          .then((res: number) => Math.ceil(res / limit));
-      default:
-        return { error: 'Таблицю не знайдено.' };
-    }
-  } catch (e) {
-    console.log(e);
-    return { error: 'Щось пішло не так.' };
+export async function getPaginationOptions(
+  url: URLSearchParams
+): Promise<{ take?: number; skip?: number }> {
+  const take = Number(url.get('take') as unknown) || 5;
+  const page = Number(url.get('page') as unknown);
+
+  return page
+    ? {
+        take: take,
+        skip: (page - 1) * take,
+      }
+    : {};
+}
+
+export async function getSearchParams(
+  search: string | undefined,
+  args: string[]
+) {
+  if (search && search.length > 0) {
+    let OR: {}[] = [];
+
+    args.map((arg) => {
+      const keys = arg.split('.');
+      let obj: { [k: string]: any } = {};
+      let nestedObj = obj;
+
+      for (let i = 0; i < keys.length - 1; i++) {
+        nestedObj[keys[i]] = {};
+        nestedObj = nestedObj[keys[i]];
+      }
+
+      nestedObj[keys[keys.length - 1]] = {
+        contains: search,
+        mode: 'insensitive',
+      };
+
+      OR.push(obj);
+    });
+
+    return { OR };
   }
+
+  return {};
+}
+
+export async function getArticleNumber(
+  limit: number,
+  whereParams: {
+    active?: boolean;
+    search?: string;
+  }
+): Promise<number> {
+  return await db.article
+    .count({
+      where: {
+        active: whereParams.active,
+        ...(await getSearchParams(whereParams.search, ['title', 'content'])),
+      },
+    })
+    .then((res) => Math.ceil(res / limit));
+}
+
+export async function getCityNumber(
+  limit: number,
+  whereParams: {
+    active?: boolean;
+    search?: string;
+  }
+): Promise<number> {
+  return await db.city
+    .count({
+      where: {
+        ...(await getSearchParams(whereParams.search, ['name'])),
+      },
+    })
+    .then((res) => Math.ceil(res / limit));
+}
+
+export async function getLocationNumber(
+  limit: number,
+  whereParams: {
+    active?: boolean;
+    search?: string;
+  }
+): Promise<number> {
+  return await db.donationLocation
+    .count({
+      where: {
+        ...(await getSearchParams(whereParams.search, [
+          'address',
+          'city.name',
+        ])),
+      },
+    })
+    .then((res) => Math.ceil(res / limit));
+}
+
+export async function getBloodNeedsNumber(
+  limit: number,
+  whereParams: {
+    active?: boolean;
+    search?: string;
+  }
+): Promise<number> {
+  return await db.bloodNeeds
+    .count({
+      where: {
+        OR: [
+          {
+            bloodTypes: {
+              has: whereParams.search ? whereParams.search : '',
+            },
+          },
+          {
+            city: {
+              name: {
+                contains: whereParams.search ? whereParams.search : '',
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      },
+    })
+    .then((res) => Math.ceil(res / limit));
+}
+
+export async function getQuestionNumber(
+  limit: number,
+  whereParams: {
+    active?: boolean;
+    search?: string;
+  }
+): Promise<number> {
+  return await db.question
+    .count({
+      where: {
+        active: whereParams.active,
+        ...(await getSearchParams(whereParams.search, ['question', 'answer'])),
+      },
+    })
+    .then((res) => Math.ceil(res / limit));
 }

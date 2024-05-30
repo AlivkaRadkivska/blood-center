@@ -1,4 +1,8 @@
-import { handleDBRequest } from '@/utils/db-helper';
+import {
+  handleDBRequest,
+  getPaginationOptions,
+  getSearchParams,
+} from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
@@ -26,23 +30,16 @@ export async function POST(request: NextRequest): Promise<Response> {
 export async function GET(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const url = request.nextUrl.searchParams;
-    const active = (url.get('active') as string) === 'true';
-    const search = url.get('search');
-    if (active) {
-      const res = await db.question.findMany({ where: { active } });
-      return Response.json(res);
-    }
+    const active = (url.get('active') as unknown) == 'true' || undefined;
 
     const res = await db.question.findMany({
+      ...(await getPaginationOptions(url)),
       where: {
-        OR: [
-          {
-            question: { contains: search ? search : '', mode: 'insensitive' },
-          },
-          {
-            answer: { contains: search ? search : '', mode: 'insensitive' },
-          },
-        ],
+        active,
+        ...(await getSearchParams(url.get('search') as string, [
+          'question',
+          'answer',
+        ])),
       },
     });
     return Response.json(res);

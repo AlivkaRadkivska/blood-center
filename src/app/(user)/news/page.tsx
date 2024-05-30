@@ -14,21 +14,11 @@ interface NewsPageProps {
 export default async function NewsPage({ searchParams }: NewsPageProps) {
   const search = searchParams?.search || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await getDBRowsNumber(
-    'articles',
-    {
-      active: true,
-      OR: [
-        {
-          title: { contains: search ? search : '', mode: 'insensitive' },
-        },
-        {
-          content: { contains: search ? search : '', mode: 'insensitive' },
-        },
-      ],
-    },
-    5
-  );
+  const limit = 1;
+  const totalPages = await getDBRowsNumber('article', limit, {
+    active: true,
+    search,
+  });
 
   return (
     <div className="w-full flex flex-col items-center justify-center mt-20">
@@ -37,15 +27,17 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
       </Title>
 
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Знайти за заголовком" />
+        <Search placeholder="Знайти за ключовими словами у заголовку чи описі" />
       </div>
 
-      <ArticlesContainer search={search} currentPage={currentPage} />
+      <ArticlesContainer
+        search={search}
+        currentPage={currentPage}
+        limit={limit}
+      />
 
       <div className="mt-5 flex w-full justify-center">
-        <Pagination
-          totalPages={typeof totalPages === 'number' ? totalPages : 1}
-        />
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );

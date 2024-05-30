@@ -3,15 +3,28 @@ import { QuestionT } from '@/types/question';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export function QuestionsTable({ search }: { search: string }) {
+interface QuestionTableProps {
+  search: string;
+  currentPage: number;
+  limit: number;
+}
+
+export function QuestionsTable({
+  search,
+  currentPage,
+  limit,
+}: QuestionTableProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [questions, setQuestions] = useState<QuestionT[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/questions/?search=${search}`, {
-      next: { revalidate: 10 },
-    })
+    fetch(
+      `/api/questions/?search=${search}&page=${currentPage}&take=${limit}`,
+      {
+        next: { revalidate: 10 },
+      }
+    )
       .then(async (res) => await res.json())
       .then((res) => {
         setQuestions(res);
@@ -20,7 +33,7 @@ export function QuestionsTable({ search }: { search: string }) {
       .catch(() => {
         setLoading(false);
       });
-  }, [search]);
+  }, [search, currentPage, limit]);
 
   return (
     <>

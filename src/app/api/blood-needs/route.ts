@@ -1,5 +1,5 @@
 import { validateUser } from '@/utils/auth-helper';
-import { handleDBRequest } from '@/utils/db-helper';
+import { getPaginationOptions, handleDBRequest } from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
@@ -33,8 +33,8 @@ export async function POST(request: NextRequest): Promise<Response> {
 export async function GET(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const url = request.nextUrl.searchParams;
-    const cityId = url.get('cityId');
-    const search = url.get('search');
+    const cityId = url.get('cityId') as string;
+    const search = url.get('search') as string;
 
     if (cityId) {
       const res = await db.bloodNeeds.findUnique({ where: { cityId } });
@@ -42,6 +42,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     }
 
     const res = await db.bloodNeeds.findMany({
+      ...(await getPaginationOptions(url)),
       where: {
         OR: [
           {

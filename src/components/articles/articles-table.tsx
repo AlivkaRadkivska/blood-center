@@ -4,13 +4,23 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-export function ArticlesTable({ search }: { search: string }) {
+interface ArticlesTableProps {
+  search: string;
+  currentPage: number;
+  limit: number;
+}
+
+export function ArticlesTable({
+  search,
+  currentPage,
+  limit,
+}: ArticlesTableProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [articles, setArticles] = useState<ArticleT[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/articles/?search=${search}`, {
+    fetch(`/api/articles/?search=${search}&page=${currentPage}&take=${limit}`, {
       next: { revalidate: 10 },
     })
       .then(async (res) => await res.json())
@@ -21,7 +31,7 @@ export function ArticlesTable({ search }: { search: string }) {
       .catch(() => {
         setLoading(false);
       });
-  }, [search]);
+  }, [search, currentPage, limit]);
 
   return (
     <>
@@ -40,7 +50,7 @@ export function ArticlesTable({ search }: { search: string }) {
                 <th>Контент</th>
                 <th>Дата останньої зміни</th>
                 <th>Активність</th>
-                <th className="w-1/4">Дії</th>
+                <th className="w-max">Дії</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-light">
@@ -60,7 +70,13 @@ export function ArticlesTable({ search }: { search: string }) {
                   <td>{item.author}</td>
                   <td>{item.description.slice(1, 50) + '...'}</td>
                   <td>...</td>
-                  <td>{new Date(item.lastUpdate).toDateString()}</td>
+                  <td>
+                    {new Date(item.lastUpdate).toLocaleDateString('uk-UA', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                    })}
+                  </td>
                   <td
                     className={
                       item.active ? 'text-2xl text-green' : 'text-2xl text-red'
@@ -68,7 +84,7 @@ export function ArticlesTable({ search }: { search: string }) {
                   >
                     {item.active ? '+' : '-'}
                   </td>
-                  <td className="flex gap-3 w-full justify-center">
+                  <td className="flex gap-3 w-full justify-center items-center h-full">
                     <Link
                       href={`/admin/articles/${item.id}/edit`}
                       className="text-purple m-2 hover:underline"

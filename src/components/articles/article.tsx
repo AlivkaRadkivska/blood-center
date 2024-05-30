@@ -32,7 +32,12 @@ export function Article({ id }: { id: string }) {
           <div className="w-full text-center">
             <Title>{article.title}</Title>
             <p className="text-xs text-gray-dark">
-              {article.author} | {new Date(article.lastUpdate).toDateString()}
+              {article.author} |{' '}
+              {new Date(article.lastUpdate).toLocaleDateString('uk-UA', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })}
             </p>
           </div>
           <div className="w-full md:px-5">

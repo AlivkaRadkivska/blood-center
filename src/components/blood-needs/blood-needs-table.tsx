@@ -3,15 +3,31 @@ import { BloodNeedsT } from '@/types/blood-needs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export function BloodNeedsTable({ search }: { search: string }) {
+interface BloodNeedsTableProps {
+  search: string;
+  currentPage: number;
+  limit: number;
+}
+
+export function BloodNeedsTable({
+  search,
+  currentPage,
+  limit,
+}: BloodNeedsTableProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [bloodNeeds, setBloodNeeds] = useState<BloodNeedsT[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/blood-needs?search=${search.replace('+', '%2B')}`, {
-      next: { revalidate: 10 },
-    })
+    fetch(
+      `/api/blood-needs?search=${search.replace(
+        '+',
+        '%2B'
+      )}&page=${currentPage}&take=${limit}`,
+      {
+        next: { revalidate: 10 },
+      }
+    )
       .then(async (res) => await res.json())
       .then((res) => {
         setBloodNeeds(res);
@@ -20,7 +36,7 @@ export function BloodNeedsTable({ search }: { search: string }) {
       .catch(() => {
         setLoading(false);
       });
-  }, [search]);
+  }, [search, currentPage, limit]);
 
   return (
     <>
@@ -44,7 +60,13 @@ export function BloodNeedsTable({ search }: { search: string }) {
                   <td>{++index}</td>
                   <td>{item.city?.name}</td>
                   <td>{item.bloodTypes.join(', ')}</td>
-                  <td>{new Date(item.lastUpdate).toDateString()}</td>
+                  <td>
+                    {new Date(item.lastUpdate).toLocaleDateString('uk-UA', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                    })}
+                  </td>
                   <td className="flex gap-3 w-full justify-center">
                     <Link
                       href={`/admin/blood-needs/${item.id}/edit`}

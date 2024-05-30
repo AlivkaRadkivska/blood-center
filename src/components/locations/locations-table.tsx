@@ -3,15 +3,28 @@ import { LocationT } from '@/types/location';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export function LocationsTable({ search }: { search: string }) {
+interface LocationsTableProps {
+  search: string;
+  currentPage: number;
+  limit: number;
+}
+
+export function LocationsTable({
+  search,
+  currentPage,
+  limit,
+}: LocationsTableProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [locations, setLocations] = useState<LocationT[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/locations/?search=${search}`, {
-      next: { revalidate: 10 },
-    })
+    fetch(
+      `/api/locations/?search=${search}&page=${currentPage}&take=${limit}`,
+      {
+        next: { revalidate: 10 },
+      }
+    )
       .then(async (res) => await res.json())
       .then((res) => {
         setLocations(res);
@@ -20,7 +33,7 @@ export function LocationsTable({ search }: { search: string }) {
       .catch(() => {
         setLoading(false);
       });
-  }, [search]);
+  }, [search, currentPage, limit]);
 
   return (
     <>

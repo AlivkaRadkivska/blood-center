@@ -20,7 +20,12 @@ export function MiniArticle({ article }: { article: ArticleT }) {
           </p>
         </Link>
         <p className="text-xs text-gray-dark">
-          {article.author} | {new Date(article.lastUpdate).toDateString()}
+          {article.author} |{' '}
+          {new Date(article.lastUpdate).toLocaleDateString('uk-UA', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          })}
         </p>
         <p className="my-2 text-s">{article.description}</p>
       </div>

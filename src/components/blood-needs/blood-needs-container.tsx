@@ -47,7 +47,12 @@ export function BloodNeedsContainer({
               Наразі потрібні такі групи крові
             </p>
             <p className="text-xs text-gray-dark">
-              Останнє оновлення даних: {bloodNeeds.lastUpdate.toDateString()}
+              Останнє оновлення даних:{' '}
+              {bloodNeeds.lastUpdate.toLocaleDateString('uk-UA', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })}
             </p>
             <div className="flex w-full justify-around my-2">
               {bloodNeeds.bloodTypes.map((item) => (

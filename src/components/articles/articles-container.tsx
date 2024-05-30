@@ -6,20 +6,25 @@ import { MiniArticle } from './mini-article';
 interface ArticlesContainerProps {
   search: string;
   currentPage: number;
+  limit: number;
 }
 
 export function ArticlesContainer({
   search,
   currentPage,
+  limit,
 }: ArticlesContainerProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [articles, setArticles] = useState<ArticleT[]>();
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/articles?active=true&search=${search}&page=${currentPage}`, {
-      next: { revalidate: 10 },
-    })
+    fetch(
+      `/api/articles?active=true&search=${search}&page=${currentPage}&take=${limit}`,
+      {
+        next: { revalidate: 10 },
+      }
+    )
       .then(async (res) => await res.json())
       .then((res) => {
         setArticles(res);
@@ -28,7 +33,7 @@ export function ArticlesContainer({
       .catch(() => {
         setLoading(false);
       });
-  }, [search, currentPage]);
+  }, [search, currentPage, limit]);
 
   return (
     <div className="flex flex-col items-center justify-center p-3 w-full max-w-[900px]">

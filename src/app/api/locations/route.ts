@@ -1,5 +1,9 @@
 import { validateUser } from '@/utils/auth-helper';
-import { handleDBRequest } from '@/utils/db-helper';
+import {
+  handleDBRequest,
+  getPaginationOptions,
+  getSearchParams,
+} from '@/utils/db-helper';
 import { db } from '@db/index';
 import { NextRequest } from 'next/server';
 
@@ -31,7 +35,6 @@ export async function GET(request: NextRequest): Promise<Response> {
   const dbRequest = async () => {
     const url = request.nextUrl.searchParams;
     const cityId = url.get('cityId');
-    const search = url.get('search');
 
     if (cityId) {
       const res = await db.donationLocation.findMany({
@@ -43,17 +46,12 @@ export async function GET(request: NextRequest): Promise<Response> {
     }
 
     const res = await db.donationLocation.findMany({
+      ...(await getPaginationOptions(url)),
       where: {
-        OR: [
-          {
-            address: { contains: search ? search : '', mode: 'insensitive' },
-          },
-          {
-            city: {
-              name: { contains: search ? search : '', mode: 'insensitive' },
-            },
-          },
-        ],
+        ...(await getSearchParams(url.get('search') as string, [
+          'address',
+          'city.name',
+        ])),
       },
       include: {
         city: true,
