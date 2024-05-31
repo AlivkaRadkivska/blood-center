@@ -1,7 +1,10 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { currentUser } from '@clerk/nextjs/server';
 
 export default async function NotFound() {
+  const user = currentUser();
+
   return (
     <>
       <Header />
@@ -13,7 +16,7 @@ export default async function NotFound() {
         </p>
       </main>
 
-      <Footer />
+      <Footer isSigned={user != null} />
     </>
   );
 }
