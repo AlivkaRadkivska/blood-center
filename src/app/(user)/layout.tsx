@@ -1,11 +1,14 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { currentUser } from '@clerk/nextjs/server';
 
 export default async function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = currentUser();
+
   return (
     <>
       <Header />
@@ -14,7 +17,7 @@ export default async function UserLayout({
         {children}
       </main>
 
-      <Footer />
+      <Footer isSigned={user != null} />
     </>
   );
 }
