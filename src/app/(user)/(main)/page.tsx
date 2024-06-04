@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import mainPhoto from '@public/images/red-heart.jpg';
+import mainPhoto from '@public/images/donation.png';
 import { AccentButton, Button } from '@/components/ui/button';
 import { Cormorant_Infant } from 'next/font/google';
 import Link from 'next/link';
@@ -15,44 +15,25 @@ const accentFont = Cormorant_Infant({
 export default async function HomePage() {
   return (
     <>
-      <section className="flex flex-col w-full min-h-screen items-center justify-center py-16">
-        <div className="flex flex-col w-full items-stretch gap-2 md:flex-row">
+      <section className="flex flex-col w-full items-center justify-center p-2">
+        <div className="flex flex-col w-full h-screen items-center justify-center gap-2">
           <Image
             src={mainPhoto}
             alt="red-heart"
-            width={0}
-            height={0}
+            width={1000}
+            height={1000}
             sizes="50vw"
-            style={{ width: '40%', height: 'auto' }}
-            className="rounded-xl"
+            className="w-full h-screen absolute -z-1 top-0 left-0 object-cover"
           />
-          <div className="h-auto w-full flex flex-col justify-between py-1">
-            <div>
-              <h1 className={`${accentFont.className} text-6xl text-purple`}>
-                Еритро Центр
-              </h1>
-              <p className="text-lg my-4">
-                Ваша участь у зборі крові дарує надію на продовження життя, адже
-                завдяки Вам, серця людей продовжують битися. ♥️
-              </p>
-              <p className="text-lg">
-                Дякуємо за Вашу доброту і підтримку, що рятує життя і змінює
-                світ на краще.
-              </p>
-            </div>
-            <div className="w-full flex gap-2">
-              <AccentButton>
-                <Link href="/for-donor">Детальніше про донорство</Link>
-              </AccentButton>
-              <Button>
-                <Link href="/locations">Здати кров</Link>
-              </Button>
-            </div>
-          </div>
+          <h1
+            className={`${accentFont.className} text-6xl text-light-red drop-shadow-md text-center`}
+          >
+            Еритро Центр
+          </h1>
         </div>
       </section>
 
-      <section className="flex flex-col w-full items-center justify-center p-2">
+      {/* <section className="flex flex-col w-full items-center justify-center p-2">
         <Title>Як працює донація крові</Title>
 
         <div>
@@ -121,7 +102,7 @@ export default async function HomePage() {
             ставши донором крові.
           </p>
         </div>
-      </section>
+      </section> */}
 
       <section className="flex flex-col w-full items-center justify-center py-2">
         <Title>Популярні питання</Title>

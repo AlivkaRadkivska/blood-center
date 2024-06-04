@@ -29,9 +29,8 @@ export function BloodNeedsContainer({
       .then(async (res) => await res.json())
       .then((res) => {
         setBloodNeeds({
-          bloodTypes: 'bloodTypes' in res ? res.bloodTypes : undefined,
-          lastUpdate:
-            'lastUpdate' in res ? new Date(res.lastUpdate) : undefined,
+          bloodTypes: res ? res.bloodTypes : undefined,
+          lastUpdate: res ? new Date(res.lastUpdate) : undefined,
         });
       });
   }, [cityId]);

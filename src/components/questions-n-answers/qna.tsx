@@ -56,7 +56,7 @@ export default function QnA() {
     <>
       {loading && <div className="text-center">Питання завантажуються...</div>}
       <Accordion
-        className="mx-2 my-4 border-t-2 border-purple w-full md:w-2/3"
+        className="mx-2 my-4 border-t-2 border-purple w-full max-w-[800px]"
         transitionTimeout={200}
       >
         {questions.map((item) => (
