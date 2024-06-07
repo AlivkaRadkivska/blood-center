@@ -27,7 +27,7 @@ export default function Input({
   }
 
   return (
-    <label className="flex flex-col md:flex-row gap-3 items-center max-content min-w-96">
+    <label className="flex flex-col md:flex-row gap-3 items-center max-content md:min-w-96">
       <span className="text-nowrap">{label}</span>
       <input
         type={type}

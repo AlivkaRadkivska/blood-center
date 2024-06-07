@@ -28,5 +28,10 @@ const config: Config = {
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      padding: ['last'],
+    },
+  },
 };
 export default config;

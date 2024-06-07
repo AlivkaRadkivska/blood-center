@@ -16,7 +16,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   };
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 mt-auto">
       {currentPage > 1 ? (
         <ChevronLeftIcon
           onClick={() => handlePagination(currentPage - 1)}

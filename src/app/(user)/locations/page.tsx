@@ -22,20 +22,20 @@ export default async function LocationsPage({
   }).then((res) => res.json());
 
   return (
-    <div className="w-full flex flex-col items-center justify-center mt-20">
+    <section className="flex flex-col w-full h-full items-center justify-center pt-20">
       <Title>
-        <h1>Усі пункти прийому</h1>
+        <h1>Пункти прийому крові</h1>
       </Title>
 
-      <div className="flex items-start p-1 w-full max-w-[800px] justify-stretch gap-3">
-        <div className="flex flex-col items-start w-[50%]">
-          <Search placeholder="Вул. Здоров'я, 1, м. Житомир" />
+      <div className="mt-3 flex flex-col sm:flex-row items-start p-1 w-full max-w-[1000px] justify-stretch gap-4">
+        <div className="flex flex-col items-start w-full sm:w-[50%] gap-3">
+          <Search placeholder="Вул. Здоров'я, 1" />
           <CitySelect cities={cities} />
         </div>
         <LocationsContainer city={city} search={search} />
       </div>
 
       <BloodNeedsModal />
-    </div>
+    </section>
   );
 }

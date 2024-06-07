@@ -17,8 +17,8 @@ export default function CityList({ cities }: { cities: CityT[] }) {
   }
 
   return (
-    <div className="border-t-1 border-purple text-purple cursor-pointer w-full">
-      <p className="py-2 text-lg text-purple">Фільтр за областю:</p>
+    <div className="border-t-1 border-purple text-purple cursor-pointer w-full text-center sm:text-left">
+      <p className="py-2 text-sm text-purple">Фільтр за містом:</p>
       <p
         className={city === '' ? 'text-red underline' : ''}
         onClick={() => handleClick('')}

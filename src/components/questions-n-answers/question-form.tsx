@@ -24,7 +24,7 @@ export default function QuestionForm() {
   return (
     <>
       {submited && (
-        <p className="my-2 text-xl text-purple text-semibold">
+        <p className="my-2 text-xl text-purple">
           Дякуємо за Ваше питання. Очікуйте відповідь на пошті.
         </p>
       )}
@@ -33,7 +33,7 @@ export default function QuestionForm() {
           onSubmit={handleSubmit}
           className="flex flex-col gap-3 mt-4 w-full max-w-[600px]"
         >
-          <p className="my-2 text-xl text-purple text-semibold">
+          <p className="my-2 text-xl text-purple font-bold">
             Залишилися питання?
           </p>
           <Input
@@ -55,9 +55,11 @@ export default function QuestionForm() {
             *Обов&apos;язкове поле для заповнення
           </p>
           {error && <p className="text-sm text-red">{error}</p>}
-          <Button>
-            <input type="submit" name="submit" value="Надіслати" />
-          </Button>
+          <div className="w-full flex items-center justify-center">
+            <Button>
+              <input type="submit" name="submit" value="Надіслати" />
+            </Button>
+          </div>
         </form>
       )}
     </>

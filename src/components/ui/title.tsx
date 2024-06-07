@@ -7,8 +7,10 @@ const accentFont = Cormorant_Infant({
 
 export default function Title({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${accentFont.className} text-3xl font-semibold text-red`}>
-      {children}
+    <div
+      className={`${accentFont.className} text-3xl font-semibold text-red flex items-center gap-2 text-center`}
+    >
+      • <div>{children}</div> •
     </div>
   );
 }

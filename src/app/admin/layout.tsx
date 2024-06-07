@@ -19,7 +19,7 @@ export default async function AdminLayout({
     <>
       <AdminHeader />
 
-      <main className="flex min-h-screen flex-col items-center justify-start p-8 pt-14">
+      <main className="flex min-h-screen flex-col items-center justify-start p-3 pt-20">
         {children}
       </main>
     </>

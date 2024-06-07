@@ -24,7 +24,7 @@ export default async function AdminCitiesPage({
 
   return (
     <>
-      <div className="w-full flex justify-between mb-2 gap-3">
+      <div className="w-full flex flex-col sm:flex-row justify-between mb-3 gap-3">
         <Search placeholder="Назва міста" />
         <Button>
           <Link href="/admin/cities/add">Додати місто</Link>

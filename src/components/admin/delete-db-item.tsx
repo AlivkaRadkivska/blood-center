@@ -15,7 +15,7 @@ export function DeleteDBItem({ id, table }: { id: string; table: string }) {
         if ('error' in res) setError(res.error);
         if ('id' in res) router.push(`/admin/${table}`);
       });
-  }, []);
+  }, [id, router, table]);
 
   return <>{error && <p>{error}</p>}</>;
 }

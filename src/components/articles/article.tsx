@@ -22,17 +22,17 @@ export function Article({ id }: { id: string }) {
       .catch(() => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   return (
     <>
       {loading && <div>Завантаження статті...</div>}
       {!loading && article && 'id' in article && (
         <>
-          <div className="w-full text-center">
+          <div className="w-full text-center flex flex-col items-center justify-center">
             <Title>{article.title}</Title>
             <p className="text-xs text-gray-dark">
-              {article.author} |{' '}
+              від {article.author} |{' '}
               {new Date(article.lastUpdate).toLocaleDateString('uk-UA', {
                 day: '2-digit',
                 month: '2-digit',
@@ -42,12 +42,13 @@ export function Article({ id }: { id: string }) {
           </div>
           <div className="w-full md:px-5">
             <Image
-              className="border-2 rounded border-purple ease-in-out object-cover m-2 float-right"
+              className="rounded object-cover m-2 float-right"
               src={article.photo}
               alt="article_image"
               width={250}
               height={220}
             />
+            <p className="py-4 italic text-sm">{article.description}</p>
             <Markup content={article.content} noWrap={true} />
           </div>
         </>

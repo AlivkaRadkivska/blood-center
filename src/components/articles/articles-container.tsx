@@ -36,7 +36,7 @@ export function ArticlesContainer({
   }, [search, currentPage, limit]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-3 w-full max-w-[900px]">
+    <div className="flex flex-col items-center justify-center p-3 w-full max-w-[1000px]">
       {loading && <div>Завантаження статей...</div>}
       {articles &&
         articles?.length > 0 &&

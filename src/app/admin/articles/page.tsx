@@ -24,13 +24,15 @@ export default async function AdminArticlesPage({
 
   return (
     <>
-      <div className="w-full flex justify-between mb-2 gap-3">
+      <div className="w-full flex flex-col sm:flex-row justify-between mb-3 gap-3">
         <Search placeholder="Ключові слова у назві або описі статті" />
         <Button>
           <Link href="/admin/articles/add">Додати статтю</Link>
         </Button>
       </div>
+
       <ArticlesTable search={search} currentPage={currentPage} limit={limit} />
+
       <Pagination totalPages={totalPages} />
     </>
   );

@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import mainPhoto from '@public/images/donation.png';
-import { AccentButton, Button } from '@/components/ui/button';
+import { AccentButton } from '@/components/ui/button';
 import { Cormorant_Infant } from 'next/font/google';
 import Link from 'next/link';
 import Title from '@/components/ui/title';
 import QnA from '@/components/questions-n-answers/qna';
 import BloodNeedsModal from '@/components/blood-needs/blood-needs-modal';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
 const accentFont = Cormorant_Infant({
   subsets: ['latin', 'cyrillic'],
@@ -15,96 +16,98 @@ const accentFont = Cormorant_Infant({
 export default async function HomePage() {
   return (
     <>
-      <section className="flex flex-col w-full items-center justify-center p-2">
-        <div className="flex flex-col w-full h-screen items-center justify-center gap-2">
-          <Image
-            src={mainPhoto}
-            alt="red-heart"
-            width={1000}
-            height={1000}
-            sizes="50vw"
-            className="w-full h-screen absolute -z-1 top-0 left-0 object-cover"
-          />
-          <h1
-            className={`${accentFont.className} text-6xl text-light-red drop-shadow-md text-center`}
-          >
-            Еритро Центр
-          </h1>
+      <section className="flex flex-col w-full h-screen items-center justify-center p-2 gap-2 text-center">
+        <Image
+          src={mainPhoto}
+          alt="red-heart"
+          width={1000}
+          height={1000}
+          sizes="50vw"
+          className="w-full h-screen absolute z-[-1] top-0 left-0 object-cover"
+        />
+        <p className="text-white -mb-4 mt-auto  drop-shadow-[0_1.3px_1.3px_#8d1e2b]">
+          Пам&apos;ятайте, Ваша кров може рятувати життя
+        </p>
+        <h1
+          className={`${accentFont.className} text-6xl text-white mb-3 drop-shadow-[0_1.3px_1.3px_#8d1e2b]`}
+        >
+          Еритро Центр
+        </h1>
+        <AccentButton>
+          <Link href="/for-donor">Хочу стати донором</Link>
+        </AccentButton>
+        <ChevronDownIcon className="size-6 mt-auto text-white animate-bounce" />
+        <ChevronDownIcon className="size-6 -mt-6 mb-2 text-white animate-bounce" />
+      </section>
+
+      <section className="w-full flex flex-col items-center justify-start gap-3 p-2">
+        <Title>Це має знати кожен</Title>
+        <div className="flex flex-col sm:flex-row w-full items-start justify-start py-1 gap-3 md:px-6">
+          <div className="w-full flex flex-col gap-3">
+            <p>
+              Донорська кров є важливою для лікування багатьох медичних станів
+              та проведення операцій. Вона використовується для:
+            </p>
+            <ul className="gap-2">
+              <li>Лікування онкологічних хворих, які проходять хіміотерапію</li>
+              <li>
+                Підтримки пацієнтів з анемією та іншими захворюваннями крові
+              </li>
+              <li>Допомоги при тяжких травмах та аваріях</li>
+              <li>Проведення складних хірургічних операцій</li>
+              <li>Підтримки жінок при ускладнених пологах</li>
+            </ul>
+          </div>
+          <div className="w-full flex flex-col gap-2">
+            <p>
+              З однієї дози крові можна отримати кілька компонентів, кожен з
+              яких має свою функцію та термін придатності:
+            </p>
+            <ul>
+              <li>
+                <strong>Еритроцити</strong>: використовуються для
+                транспортування кисню, термін придатності – 42 дні
+              </li>
+              <li>
+                <strong>Плазма</strong>: використовується для лікування
+                коагулопатій, термін придатності – до 1 року при заморожуванні
+              </li>
+              <li>
+                <strong>Тромбоцити</strong>: необхідні для зупинки кровотеч,
+                термін придатності – 5 днів
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-start justify-around mt-4 gap-3 w-full">
+          <div className="flex flex-col items-center justify-center text-center w-28">
+            <p className="w-full border-b-2 border-purple mb-2">
+              <span className="text-2xl font-bold">8</span>%
+            </p>
+            <p>загальної маси тіла становить кров</p>
+          </div>
+          <div className="flex flex-col items-center justify-center text-center w-28">
+            <p className="w-full border-b-2 border-purple mb-2">
+              &lt;<span className="text-2xl font-bold">450</span> мл
+            </p>
+            <p>крові збирають за один сеанс донації</p>
+          </div>
+          <div className="flex flex-col items-center justify-center text-center w-28">
+            <p className="w-full border-b-2 border-purple mb-2">
+              <span className="text-2xl font-bold">200</span> тис.
+            </p>
+            <p>пацієнтів в Україні потребують переливання щороку</p>
+          </div>
+          <div className="flex flex-col items-center justify-center text-center w-28">
+            <p className="w-full border-b-2 border-purple mb-2">
+              на <span className="text-2xl font-bold">60</span>%
+            </p>
+            <p>збільшилось навантаження на донорство після повномасштабного</p>
+          </div>
         </div>
       </section>
 
-      {/* <section className="flex flex-col w-full items-center justify-center p-2">
-        <Title>Як працює донація крові</Title>
-
-        <div>
-          <h2>Вступ</h2>
-          <p>
-            Донація крові — це важлива процедура, яка може врятувати життя
-            багатьох людей. Вона є необхідною для хірургічних операцій,
-            лікування тяжких захворювань і під час надзвичайних ситуацій.
-          </p>
-
-          <h2>Процес донації крові</h2>
-          <h3>1. Підготовка до донації</h3>
-          <p>
-            Перед здачею крові донору потрібно підготуватися. Це включає в себе
-            дотримання здорового харчування, уникання алкоголю і важкої фізичної
-            активності за кілька днів до процедури. Важливо також добре
-            виспатися в ніч перед донацією.
-          </p>
-
-          <h3>2. Реєстрація та обстеження</h3>
-          <p>
-            Коли донор приходить до центру здачі крові, він повинен
-            зареєструватися та заповнити анкету про своє здоров&apos;я. Потім
-            лікар проводить коротке медичне обстеження, включаючи вимірювання
-            артеріального тиску, рівня гемоглобіну та температури.
-          </p>
-
-          <h3>3. Процес здачі крові</h3>
-          <p>
-            Після успішного обстеження донор сідає у спеціальне крісло. Медичний
-            працівник вводить голку у вену, зазвичай на руці, і кров починає
-            текти у спеціальний мішок. Уся процедура займає близько 10-15 хвилин
-            і зазвичай донують близько 450 мл крові.
-          </p>
-
-          <h3>4. Після донації</h3>
-          <p>
-            Після здачі крові донору радять відпочити кілька хвилин, випити
-            склянку води чи соку і з&apos;їсти легкий перекус. Бажано уникати
-            фізичної активності і пити багато рідини протягом наступних 24
-            годин.
-          </p>
-
-          <h2>Хто може бути донором</h2>
-          <p>
-            Донором може стати будь-яка здорова людина віком від 18 до 60 років,
-            яка важить більше 50 кг і не має протипоказань до здачі крові.
-            Важливо, щоб донор не мав серйозних захворювань і не вживав певні
-            медикаменти.
-          </p>
-
-          <h2>Користь від донації крові</h2>
-          <p>
-            Донація крові не лише допомагає тим, хто потребує переливання, але й
-            приносить користь самому донору. Вона сприяє оновленню
-            кров&apos;яних клітин, покращує кровообіг та зміцнює імунну систему.
-            Регулярна здача крові також допомагає контролювати рівень заліза в
-            організмі.
-          </p>
-
-          <h2>Висновок</h2>
-          <p>
-            Донація крові — це благородний вчинок, який може врятувати життя.
-            Процедура є безпечною і приносить користь як отримувачу, так і
-            донору. Кожен з нас може зробити свій внесок у підтримку життя,
-            ставши донором крові.
-          </p>
-        </div>
-      </section> */}
-
-      <section className="flex flex-col w-full items-center justify-center py-2">
+      <section className="flex flex-col w-full items-center justify-center p-2">
         <Title>Популярні питання</Title>
         <QnA />
       </section>

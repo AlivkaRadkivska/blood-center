@@ -13,7 +13,7 @@ export default async function UserLayout({
     <>
       <Header />
 
-      <main className="flex flex-col flex-auto justify-start items-center p-2 w-full">
+      <main className="flex flex-col flex-auto justify-start items-center p-2 w-full h-full">
         {children}
       </main>
 

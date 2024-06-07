@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { LocationT } from '@/types/location';
+import Location from './location';
 
 interface LocationsContainerProps {
   city: string;
@@ -28,20 +28,13 @@ export function LocationsContainer({ city, search }: LocationsContainerProps) {
   }, [city, search]);
 
   return (
-    <div className="flex flex-col w-full items-start justify-start">
+    <div className="flex flex-col w-full items-start justify-start border-t-2 border-purple sm:border-none">
       {loading && <div>Завантаження пунктів прийому крові...</div>}
       {locations &&
         !loading &&
         locations?.length > 0 &&
-        locations.map((item) => (
-          <Link
-            key={item.id}
-            href={item.url}
-            target="_blank"
-            className="underline underline-offset-2"
-          >
-            {item.address}
-          </Link>
+        locations.map((item, index) => (
+          <Location index={index + 1} location={item} key={item.id} />
         ))}
       {!loading && (!locations || locations.length === 0) && (
         <p className="my-2">На жаль, пунктів прийому крові не знайдено.</p>

@@ -10,7 +10,7 @@ export default function Footer({ isSigned }: { isSigned: boolean }) {
     <footer className="w-full flex flex-col gap-1 p-3 bg-purple text-gray-light md:text-left text-center">
       <div className="w-full flex flex-col md:flex-row gap-3 items-start py-4">
         <div className="w-full flex flex-col gap-1">
-          <p className="text-xl ml-2">Еритро Центр</p>
+          <p className="text-xl ml-2 font-bold">Еритро Центр</p>
           <p className="text-xs">інформаційний сайт про донорство крові</p>
           <p className="pt-4 w-full">
             Ваша участь у зборі крові дарує надію на продовження життя, адже
@@ -22,7 +22,7 @@ export default function Footer({ isSigned }: { isSigned: boolean }) {
           </p>
         </div>
         <div className="w-full md:w-[60%] flex flex-col gap-1 mt-3 md:m-auto">
-          <p className="text-xl ml-2">Залишились питання?</p>
+          <p className="text-xl ml-2">Наші контакти</p>
           <div className="w-full flex flex-col sm:flex-row md:flex-col gap-2 justify-between items-center sm:items-start pt-4">
             <Link
               className="flex items-center gap-2 hover:underline"
@@ -65,19 +65,17 @@ export default function Footer({ isSigned }: { isSigned: boolean }) {
 
         {isSigned ? (
           <Link
-            href="/sign-in"
+            href="/admin/cities"
             className="underline underline-offset-2 hover:underline-offset-4"
-            target="_blank"
           >
-            Вхід в адмін кабінет
+            Адмін кабінет
           </Link>
         ) : (
           <Link
-            href="/admin/cities"
-            className="underline underline-offset-2"
-            target="_blank"
+            href="/sign-in"
+            className="underline underline-offset-2 hover:underline-offset-4"
           >
-            Адмін кабінет
+            Адмін логін
           </Link>
         )}
       </div>
