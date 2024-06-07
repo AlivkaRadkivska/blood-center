@@ -46,11 +46,35 @@ export function LocationForm({ cities, location }: LocationFormProps) {
         </label>
         <Input
           type="text"
+          name="institution"
+          label="Назва закладу*:"
+          placeholder="Міська лікарня"
+          required={true}
+          value={location ? location.institution : undefined}
+        />
+        <Input
+          type="text"
           name="address"
           label="Адреса*:"
           placeholder="Вул. Здоров'я, 2"
           required={true}
           value={location ? location.address : undefined}
+        />
+        <Input
+          type="text"
+          name="phone"
+          label="Телефон пункту прийому*:"
+          placeholder="+38 (099) 999 99 99"
+          required={true}
+          value={location ? location.phone : undefined}
+        />
+        <Input
+          type="text"
+          name="openedAt"
+          label="Робочий час*:"
+          placeholder="9.00 - 21.00"
+          required={true}
+          value={location ? location.openedAt : undefined}
         />
         <Input
           type="text"

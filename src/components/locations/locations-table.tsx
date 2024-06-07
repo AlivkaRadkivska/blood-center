@@ -48,7 +48,10 @@ export function LocationsTable({
                 <tr>
                   <th className="w-[30px]">№</th>
                   <th>Місто</th>
+                  <th>Заклад</th>
                   <th>Адреса</th>
+                  <th>Телефон</th>
+                  <th>Робочий час</th>
                   <th>Посилання</th>
                   <th className="w-1/3">Дії</th>
                 </tr>
@@ -58,7 +61,10 @@ export function LocationsTable({
                   <tr key={item.id}>
                     <td>{++index}</td>
                     <td>{item.city?.name}</td>
+                    <td>{item.institution}</td>
                     <td>{item.address}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.openedAt}</td>
                     <td>{item.url}</td>
                     <td className="flex gap-3 w-full justify-center">
                       <Link

@@ -34,11 +34,14 @@ model City {
 }
 
 model DonationLocation {
-  id      String @id @default(uuid())
-  address String
-  cityId  String
-  url     String
-  city    City   @relation(fields: [cityId], references: [id])
+  id          String @id @default(uuid())
+  institution String
+  address     String
+  phone       String
+  openedAt    String
+  url         String
+  cityId      String
+  city        City   @relation(fields: [cityId], references: [id])
 }
 
 model BloodNeeds {

@@ -13,17 +13,27 @@ export async function POST(request: NextRequest): Promise<Response> {
 
   const dbRequest = async () => {
     const url = await request.formData();
+    const institution = url.get('institution') as string;
     const address = url.get('address') as string;
+    const phone = url.get('phone') as string;
+    const openedAt = url.get('openedAt') as string;
     const locationUrl = url.get('url') as string;
     const cityId = url.get('city') as string;
-    if (!address || !locationUrl || !cityId)
+    if (
+      !institution ||
+      !address ||
+      !locationUrl ||
+      !cityId ||
+      !phone ||
+      !openedAt
+    )
       return Response.json(
         { error: 'Надайте, будь ласка, всю інформацію.' },
         { status: 400 }
       );
 
     const res = await db.donationLocation.create({
-      data: { address, url: locationUrl, cityId },
+      data: { institution, address, phone, openedAt, url: locationUrl, cityId },
     });
     return Response.json(res);
   };

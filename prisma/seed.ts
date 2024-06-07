@@ -58,12 +58,18 @@ async function main() {
   await db.donationLocation.createMany({
     data: [
       {
+        institution: 'Житомирська Міська Лікарня',
         address: 'Вул. Один, 2',
+        phone: '+38 (096) 672 23 92',
+        openedAt: '8.00 - 20.00',
         cityId: city.id,
         url: 'https://example.com/donate-location1',
       },
       {
+        institution: 'Онкоцентр',
         address: 'Вул. Два, 1',
+        phone: '+38 (096) 454 45 34',
+        openedAt: '9.00 - 18.00',
         url: 'https://example.com/donate-location2',
         cityId: city.id,
       },

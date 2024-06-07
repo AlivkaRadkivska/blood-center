@@ -34,9 +34,12 @@ CREATE TABLE "City" (
 -- CreateTable
 CREATE TABLE "DonationLocation" (
     "id" TEXT NOT NULL,
+    "institution" TEXT NOT NULL,
     "address" TEXT NOT NULL,
-    "cityId" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "openedAt" TEXT NOT NULL,
     "url" TEXT NOT NULL,
+    "cityId" TEXT NOT NULL,
 
     CONSTRAINT "DonationLocation_pkey" PRIMARY KEY ("id")
 );
