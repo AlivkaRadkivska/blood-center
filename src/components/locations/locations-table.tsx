@@ -2,6 +2,7 @@
 import { LocationT } from '@/types/location';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Loader from '../ui/loader';
 
 interface LocationsTableProps {
   search: string;
@@ -37,7 +38,7 @@ export function LocationsTable({
 
   return (
     <>
-      {loading && <div>Завантаження пунктів прийому крові...</div>}
+      {loading && <Loader description="Завантаження пунктів прийому крові" />}
 
       <div className="w-full overflow-x-auto">
         <table className="text-center w-full divide-y divide-gray border-spacing-2 leading-normal">

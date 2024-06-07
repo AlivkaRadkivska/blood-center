@@ -1,6 +1,6 @@
 import BloodNeedsModal from '@/components/blood-needs/blood-needs-modal';
 import { LocationsContainer } from '@/components/locations/locations-container';
-import CitySelect from '@/components/ui/city-list';
+import CitySelect from '@/components/cities/city-list';
 import Search from '@/components/ui/search';
 import Title from '@/components/ui/title';
 import { CityT } from '@/types/city';
@@ -22,7 +22,7 @@ export default async function LocationsPage({
   }).then((res) => res.json());
 
   return (
-    <section className="flex flex-col w-full h-full items-center justify-center pt-20">
+    <section className="flex flex-col w-full h-full items-center justify-start pt-20 mb-auto">
       <Title>
         <h1>Пункти прийому крові</h1>
       </Title>

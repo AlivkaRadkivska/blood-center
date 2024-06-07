@@ -57,7 +57,7 @@ export default function QnA() {
 
   return (
     <>
-      {loading && <Loader description="Питання завантажуються" />}
+      {loading && <Loader description="Завантаження питань" />}
       <Accordion
         className="mx-2 my-4 border-purple w-full md:px-6"
         transitionTimeout={200}

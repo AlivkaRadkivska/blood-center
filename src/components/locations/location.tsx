@@ -33,7 +33,7 @@ export default function Location({ index, location }: LocationProps) {
           target="_blank"
           className="italic hover:underline"
         >
-          Переглянути на карті...
+          Переглянути на карті &gt;&gt;
         </Link>
       </div>
     </div>

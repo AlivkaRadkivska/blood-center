@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 import Input from '../ui/input';
 import { useRouter } from 'next/navigation';
 import { LocationT } from '@/types/location';
-import CitySelect from '../ui/city-select';
+import CitySelect from '../cities/city-select';
 import { CityT } from '@/types/city';
 
 interface LocationFormProps {

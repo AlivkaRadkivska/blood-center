@@ -2,6 +2,7 @@
 import { QuestionT } from '@/types/question';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Loader from '../ui/loader';
 
 interface QuestionTableProps {
   search: string;
@@ -37,7 +38,7 @@ export function QuestionsTable({
 
   return (
     <>
-      {loading && <div>Завантаження питань...</div>}
+      {loading && <Loader description="Завантаження питань" />}
 
       <div className="w-full overflow-x-auto">
         <table className="text-center w-full divide-y divide-gray border-spacing-2 leading-normal">

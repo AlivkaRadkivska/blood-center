@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Title from '../ui/title';
 import { Markup } from 'interweave';
+import Loader from '../ui/loader';
 
 export function Article({ id }: { id: string }) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -26,7 +27,7 @@ export function Article({ id }: { id: string }) {
 
   return (
     <>
-      {loading && <div>Завантаження статті...</div>}
+      {loading && <Loader description="Завантаження статті" />}
       {!loading && article && 'id' in article && (
         <>
           <div className="w-full text-center flex flex-col items-center justify-center">
@@ -42,7 +43,7 @@ export function Article({ id }: { id: string }) {
           </div>
           <div className="w-full md:px-5">
             <Image
-              className="rounded object-cover m-2 float-right"
+              className="rounded w-auto h-auto object-cover m-2 float-right"
               src={article.photo}
               alt="article_image"
               width={250}

@@ -2,6 +2,7 @@
 import { ArticleT } from '@/types/article';
 import { useEffect, useState } from 'react';
 import { MiniArticle } from './mini-article';
+import Loader from '../ui/loader';
 
 interface ArticlesContainerProps {
   search: string;
@@ -37,7 +38,7 @@ export function ArticlesContainer({
 
   return (
     <div className="flex flex-col items-center justify-center p-3 w-full max-w-[1000px]">
-      {loading && <div>Завантаження статей...</div>}
+      {loading && <Loader description="Завантаження статей" />}
       {articles &&
         articles?.length > 0 &&
         articles.map((item) => <MiniArticle key={item.id} article={item} />)}

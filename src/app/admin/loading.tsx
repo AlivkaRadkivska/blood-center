@@ -1,7 +1,5 @@
+import Loader from '@/components/ui/loader';
+
 export default function Loading() {
-  return (
-    <p className="text-xl mt-4">
-      Зачекайте хвилинку, сторінка завантажується...
-    </p>
-  );
+  return <Loader description="Завантаження сторінки" />;
 }

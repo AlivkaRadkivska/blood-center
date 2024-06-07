@@ -3,6 +3,7 @@ import { ArticleT } from '@/types/article';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Loader from '../ui/loader';
 
 interface ArticlesTableProps {
   search: string;
@@ -35,7 +36,7 @@ export function ArticlesTable({
 
   return (
     <>
-      {loading && <div>Завантаження статей...</div>}
+      {loading && <Loader description="Завантаження статей" />}
 
       <div className="w-full overflow-x-auto">
         <table className="text-center w-full divide-y divide-gray border-spacing-2 leading-normal">

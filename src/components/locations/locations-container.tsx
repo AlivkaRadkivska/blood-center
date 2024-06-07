@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { LocationT } from '@/types/location';
 import Location from './location';
+import Loader from '../ui/loader';
 
 interface LocationsContainerProps {
   city: string;
@@ -29,7 +30,7 @@ export function LocationsContainer({ city, search }: LocationsContainerProps) {
 
   return (
     <div className="flex flex-col w-full items-start justify-start border-t-2 border-purple sm:border-none">
-      {loading && <div>Завантаження пунктів прийому крові...</div>}
+      {loading && <Loader description="Завантаження пунктів прийому крові" />}
       {locations &&
         !loading &&
         locations?.length > 0 &&

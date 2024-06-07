@@ -23,7 +23,7 @@ export default async function HomePage() {
           width={1000}
           height={1000}
           sizes="50vw"
-          className="w-full h-screen absolute z-[-1] top-0 left-0 object-cover"
+          className="w-auto h-screen absolute z-[-1] top-0 left-0 object-cover"
         />
         <p className="text-white -mb-4 mt-auto  drop-shadow-[0_1.3px_1.3px_#8d1e2b]">
           Пам&apos;ятайте, Ваша кров може рятувати життя

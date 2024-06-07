@@ -8,7 +8,7 @@ interface ArticlePageProps {
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
-    <div className="w-full flex flex-col items-center justify-center mt-20">
+    <div className="w-full h-full flex flex-col items-center justify-center mt-20">
       <Article id={params.id} />
     </div>
   );

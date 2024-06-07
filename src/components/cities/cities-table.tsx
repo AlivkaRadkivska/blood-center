@@ -2,6 +2,7 @@
 import { CityT } from '@/types/city';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Loader from '../ui/loader';
 
 interface CitiesTableProps {
   search: string;
@@ -30,7 +31,7 @@ export function CitiesTable({ search, currentPage, limit }: CitiesTableProps) {
 
   return (
     <>
-      {loading && <div>Завантаження міст...</div>}
+      {loading && <Loader description="Завантаження міст" />}
 
       <div className="w-full overflow-x-auto">
         <table className="text-center w-full divide-y divide-gray border-spacing-2 leading-normal">

@@ -2,6 +2,7 @@
 import { BloodNeedsT } from '@/types/blood-needs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Loader from '../ui/loader';
 
 interface BloodNeedsTableProps {
   search: string;
@@ -40,7 +41,7 @@ export function BloodNeedsTable({
 
   return (
     <>
-      {loading && <div>Завантаження термінових потреб крові...</div>}
+      {loading && <Loader description="Завантаження термінових потреб крові" />}
 
       <div className="w-full overflow-x-auto">
         <table className="text-center w-full divide-y divide-gray border-spacing-2 leading-normal">

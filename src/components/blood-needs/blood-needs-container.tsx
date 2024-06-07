@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { CityT } from '@/types/city';
-import CitySelect from '../ui/city-select';
+import CitySelect from '../cities/city-select';
 import { Button } from '../ui/button';
 
 interface BloodNeedsContainerProps {
