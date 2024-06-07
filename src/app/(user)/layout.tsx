@@ -7,7 +7,7 @@ export default async function UserLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = currentUser();
+  const user = await currentUser();
 
   return (
     <>
