@@ -13,7 +13,7 @@ export default async function AdminEditCityPage({
 }: AdminEditCityPageProps) {
   const city: CityT = await fetch(
     `${process.env.BACKEND_URL}/api/cities/${id}`,
-    { next: { revalidate: 10 } }
+    { cache: 'no-store' }
   ).then((res) => res.json());
 
   return (

@@ -4,7 +4,7 @@ import { CityT } from '@/types/city';
 
 export default async function AdminAddBloodNeedsPage() {
   const cities: CityT[] = await fetch(`${process.env.BACKEND_URL}/api/cities`, {
-    next: { revalidate: 10 },
+    cache: 'no-store',
   }).then((res) => res.json());
 
   return (

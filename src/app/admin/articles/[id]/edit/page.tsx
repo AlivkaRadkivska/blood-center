@@ -13,7 +13,7 @@ export default async function AdminEditArticlePage({
 }: AdminEditArticlePageProps) {
   const article: ArticleT = await fetch(
     `${process.env.BACKEND_URL}/api/articles/${id}`,
-    { next: { revalidate: 10 } }
+    { cache: 'no-store' }
   ).then((res) => res.json());
 
   return (

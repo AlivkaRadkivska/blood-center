@@ -13,7 +13,7 @@ export default async function AdminEditQuestionPage({
 }: AdminEditQuestionPageProps) {
   const question: QuestionT = await fetch(
     `${process.env.BACKEND_URL}/api/questions/${id}`,
-    { next: { revalidate: 10 } }
+    { cache: 'no-store' }
   ).then((res) => res.json());
 
   return (

@@ -23,9 +23,7 @@ export function BloodNeedsContainer({
   });
 
   useEffect(() => {
-    fetch(`/api/blood-needs?cityId=${cityId}`, {
-      next: { revalidate: 10 },
-    })
+    fetch(`/api/blood-needs?cityId=${cityId}`, { cache: 'no-store' })
       .then(async (res) => await res.json())
       .then((res) => {
         setBloodNeeds({
