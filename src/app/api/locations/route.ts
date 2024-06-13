@@ -48,6 +48,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 
     if (cityId) {
       const res = await db.donationLocation.findMany({
+        ...(await getPaginationOptions(url)),
         where: {
           cityId,
         },

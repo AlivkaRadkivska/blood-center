@@ -7,17 +7,27 @@ import Loader from '../ui/loader';
 interface LocationsContainerProps {
   city: string;
   search: string;
+  currentPage: number;
+  limit: number;
 }
 
-export function LocationsContainer({ city, search }: LocationsContainerProps) {
+export function LocationsContainer({
+  city,
+  search,
+  currentPage,
+  limit,
+}: LocationsContainerProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [locations, setLocations] = useState<LocationT[]>();
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/locations?cityId=${city}&search=${search}`, {
-      next: { revalidate: 10 },
-    })
+    fetch(
+      `/api/locations?cityId=${city}&search=${search}&page=${currentPage}&take=${limit}`,
+      {
+        next: { revalidate: 10 },
+      }
+    )
       .then(async (res) => await res.json())
       .then((res) => {
         setLocations(res);
@@ -26,7 +36,7 @@ export function LocationsContainer({ city, search }: LocationsContainerProps) {
       .catch(() => {
         setLoading(false);
       });
-  }, [city, search]);
+  }, [city, search, currentPage, limit]);
 
   return (
     <div className="flex flex-col w-full items-start justify-start border-t-2 border-purple sm:border-none">

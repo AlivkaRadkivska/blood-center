@@ -44,7 +44,7 @@ export function CitiesTable({ search, currentPage, limit }: CitiesTableProps) {
                   <th className="tracking-wider">Дії</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-ligh">
+              <tbody className="divide-y divide-gray-light">
                 {cities.map((item, index) => (
                   <tr key={item.id}>
                     <td>{++index}</td>

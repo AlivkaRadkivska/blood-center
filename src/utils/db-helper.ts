@@ -139,6 +139,7 @@ export async function getLocationNumber(
   whereParams: {
     active?: boolean;
     search?: string;
+    cityId?: string;
   }
 ): Promise<number> {
   return await db.donationLocation
@@ -148,6 +149,7 @@ export async function getLocationNumber(
           'address',
           'city.name',
         ])),
+        cityId: whereParams.cityId ? whereParams.cityId : undefined,
       },
     })
     .then((res) => Math.ceil(res / limit));
