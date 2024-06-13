@@ -12,5 +12,4 @@ Sentry.init({
       blockAllMedia: true,
     }),
   ],
-  spotlight: process.env.NODE_ENV === 'production',
 });
